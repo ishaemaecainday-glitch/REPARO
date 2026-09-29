@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <title>Reparo - Service Profile</title>
+
+  <!--
+    This page uses its own styles below to prevent the older
+    service-page CSS rules from conflicting with this layout.
+  -->
+  <style>
+    :root {
+      --teal: #00b8a3;
+      --teal-dark: #008b80;
+      --ink: #18333b;
+      --muted: #71818c;
+      --border: #e4eeeb;
+      --surface: #f1faf7;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    body {
+      background: #e9efed;
+      color: var(--ink);
+      font-family:
+        -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: .6;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid #e6af35;
+      outline-offset: 4px;
+    }
+
+    .icon-definitions {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .icon {
+      width: 21px;
+      height: 21px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Only this area scrolls. Bottom controls stay in place. */
+    .mobile-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .service-profile {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scrollbar-width: thin;
+      scrollbar-color: #b5d8cf transparent;
+    }
+
+    #providerLoadStatus {
+      margin: 24px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Profile header */
+    .service-hero {
+      padding: max(18px, env(safe-area-inset-top))
+        22px 50px;
+      background: linear-gradient(
+        155deg,
+        #00bba6 0%,
+        #009c8e 60%,
+        #008b80 100%
+      );
+      color: #fff;
+      text-align: center;
+    }
+
+    .hero-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .hero-toolbar > span {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .3px;
+      opacity: .9;
+    }
+
+    .service-back {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff24;
+    }
+
+    .service-avatar-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .service-avatar {
+      display: grid;
+      place-items: center;
+      width: 96px;
+      height: 96px;
+      border: 4px solid #fff;
+      border-radius: 24px;
+      background: #e6f5ee;
+      color: var(--teal-dark);
+      object-fit: cover;
+      overflow: hidden;
+    }
+
+    #providerAvatarFallback .icon {
+      width: 43px;
+      height: 43px;
+    }
+
+    .service-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border: 1px solid #ffffff55;
+      border-radius: 20px;
+      background: #ffffff20;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    #providerName {
+      margin: 16px 0 7px;
+      font-size: 24px;
+      font-weight: 750;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    #providerCategory {
+      display: inline-block;
+      margin: 0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #ffffff24;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .hero-location {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 7px;
+      margin: 16px auto 0;
+      max-width: 350px;
+    }
+
+    .hero-location .icon {
+      width: 17px;
+      height: 17px;
+      margin-top: 2px;
+    }
+
+    #providerLocation {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    #providerDistanceBox {
+      margin: 10px auto 0;
+      max-width: 350px;
+    }
+
+    #providerDistance {
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.6;
+      color: #e5fff7;
+    }
+
+    #serviceDistanceLocation {
+      margin-top: 8px;
+      padding: 7px 11px;
+      border: 1px solid #ffffff65;
+      border-radius: 20px;
+      background: #ffffff15;
+      color: #fff;
+      font-size: 11px;
+    }
+    
+
+    /* Statistics overlap the header slightly */
+    .service-stats {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: -28px 20px 18px;
+      padding: 20px 8px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 22px #174f3e08;
+    }
+
+    .service-stats > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .service-stats > div + div {
+      border-left: 1px solid #edf2f0;
+    }
+
+    .service-stats strong {
+      color: var(--teal-dark);
+      font-size: 19px;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    .service-stats span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* Tabs */
+    .service-tab-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 0 20px 14px;
+      background: var(--surface);
+    }
+
+    .service-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      padding: 5px;
+      border-radius: 28px;
+      background: #fff;
+    }
+
+    .service-tab {
+      min-height: 42px;
+      padding: 10px 6px;
+      border: 0;
+      border-radius: 24px;
+      background: transparent;
+      color: #6b7b86;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .service-tab[aria-selected="true"] {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .service-panels {
+      padding: 0 20px 24px;
+    }
+
+    .service-panel {
+      min-width: 0;
+    }
+
+    .content-card {
+      margin-bottom: 16px;
+      padding: 20px;
+      border: 1px solid #edf3f0;
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .content-card h2 {
+      margin: 0 0 15px;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .card-caption {
+      margin: -7px 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    /* Availability */
+    .availability-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #e3f7ef;
+      border-color: #cfebdf;
+    }
+
+    .availability-card > .icon {
+      color: #138767;
+      margin-top: 1px;
+    }
+
+    .availability-card h2 {
+      margin-bottom: 6px;
+      color: #14795e;
+      font-size: 12px;
+      letter-spacing: .3px;
+    }
+
+    #providerAvailability {
+      margin: 0;
+      color: #215c4b;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    /* Skills rendered by existing Firestore code */
+    .service-skills {
+      display: grid;
+      gap: 10px;
+    }
+
+    .service-skills > span {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid #e4f0eb;
+      border-radius: 12px;
+      background: #f8fcfa;
+      color: #294d43;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .service-skills > span::before {
+      content: "✓";
+      display: grid;
+      place-items: center;
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: #e0f5ed;
+      color: var(--teal-dark);
+      font-size: 14px;
+    }
+
+    .service-skills > p,
+    .service-work-photos > p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .service-work-photos {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .service-work-photos > img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 13px;
+      background: #edf4f0;
+    }
+
+    .service-work-photos > p {
+      grid-column: 1 / -1;
+    }
+
+    #providerBio {
+      margin: 0;
+      color: #586b76;
+      font-size: 14px;
+      line-height: 1.85;
+      white-space: pre-line;
+      overflow-wrap: anywhere;
+    }
+
+    /* Existing reviews module renders into this container */
+    #providerReviewSection {
+      min-width: 0;
+      color: #334b53;
+      font-size: 13px;
+      line-height: 1.75;
+      overflow-wrap: anywhere;
+    }
+
+    #providerReviewSection > :first-child {
+      margin-top: 0;
+    }
+
+    #providerReviewSection h2,
+    #providerReviewSection h3 {
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    #providerReviewSection img {
+      max-width: 100%;
+    }
+
+    #locationSourceCredit {
+      margin: 10px 20px 20px;
+      color: #798b90;
+      text-align: center;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    /* Persistent bottom actions: no duplicate chat/call row */
+    #serviceActionBar {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      background: #fff;
+      box-shadow: 0 -5px 18px #173d3405;
+    }
+
+    .service-rate {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 2px 2px;
+    }
+
+    .service-rate span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    #providerPrice {
+      color: var(--teal-dark);
+      font-size: 17px;
+      font-weight: 750;
+    }
+
+    #serviceActionBar > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 11px;
+      border-radius: 13px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    #providerContact {
+      border: 1px solid #e0e6e4;
+      background: #f1f4f3;
+      color: #36564d;
+    }
+
+    #providerBook {
+      border: 1px solid var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+
+    #serviceActionBar a[aria-disabled="true"] {
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .bottom-nav {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      align-items: center;
+      padding: 8px 8px max(8px, env(safe-area-inset-bottom));
+      border-top: 1px solid #edf2ef;
+      background: #fff;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-width: 0;
+      min-height: 44px;
+      color: #8a989e;
+      font-size: 10px;
+    }
+
+    .nav-item.active {
+      color: var(--teal-dark);
+    }
+
+    .nav-add {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      margin: auto;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #fff;
+    }
+
+    #providerContactNote {
+      margin: 10px 20px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 350px) {
+      .service-hero {
+        padding-right: 16px;
+        padding-left: 16px;
+      }
+
+      .service-panels {
+        padding-right: 14px;
+        padding-left: 14px;
+      }
+
+      .content-card {
+        padding: 16px;
+      }
+
+      #providerName {
+        font-size: 21px;
+      }
+    }
+    /* Reference-style upper profile */
+body.service-page .service-hero {
+  padding: max(24px, env(safe-area-inset-top))
+    20px 54px;
+  background: linear-gradient(
+    160deg,
+    #00bda7 0%,
+    #00a895 55%,
+    #008d81 100%
+  );
+  color: #fff;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.service-hero .hero-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 22px;
+}
+
+.hero-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.service-hero .hero-icon-button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .2);
+  color: #fff;
+  cursor: pointer;
+}
+
+.hero-icon-button svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero-icon-button:hover {
+  background: rgba(255, 255, 255, .3);
+}
+
+#saveServiceProfile[aria-pressed="true"] svg {
+  fill: #fff;
+}
+
+.hero-avatar-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.service-hero .service-avatar {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  border: 3px solid #fff;
+  border-radius: 17px;
+  background: #eaf6f0;
+  color: #008d81;
+  object-fit: cover;
+}
+
+#providerAvatarFallback > svg {
+  width: 38px;
+  height: 38px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.hero-verified {
+  position: absolute;
+  right: -5px;
+  bottom: -4px;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #00b9a5;
+}
+
+.hero-verified svg {
+  width: 18px;
+  height: 18px;
+}
+
+.verified-seal {
+  fill: #fff;
+  stroke: none;
+}
+
+.verified-check {
+  fill: none;
+  stroke: #00aa95;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.service-hero #providerName {
+  margin: 5px 0 0;
+  color: #e8fff9;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.hero-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.hero-rating > svg {
+  width: 16px;
+  height: 16px;
+  fill: #ffe23d;
+  stroke: none;
+}
+
+#heroRatingValue {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+#heroReviewCount {
+  font-size: 12px;
+  color: #e1faf4;
+}
+
+.hero-meta-dot {
+  margin: 0 3px;
+  color: #7dded0;
+  font-size: 14px;
+}
+
+.service-hero .hero-location {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.service-hero .hero-location > svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  fill: none;
+  stroke: #d4fff4;
+  stroke-width: 1.8;
+}
+
+.service-hero #providerLocation {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.service-hero #providerCategory,
+.service-hero #heroAvailability {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0;
+  padding: 5px 12px;
+  border: 0;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.service-hero #providerCategory {
+  background: rgba(255, 255, 255, .22);
+  text-transform: capitalize;
+}
+
+.service-hero #heroAvailability {
+  background: rgba(11, 196, 132, .55);
+}
+
+#heroAvailability:empty,
+#heroActionStatus:empty {
+  display: none;
+}
+
+#heroActionStatus {
+  margin: 12px 0 0;
+  color: #e5fff6;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Smaller statistics, matching the reference */
+.service-page .service-stats {
+  margin: -30px 20px 18px;
+  padding: 19px 8px;
+  border: 0;
+  border-radius: 17px;
+  box-shadow: none;
+}
+
+.service-page .service-stats strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.service-page .service-stats span {
+  font-size: 11px;
+}
+
+@media (max-width: 350px) {
+  .hero-meta {
+    gap: 5px;
+  }
+
+  .hero-meta-dot {
+    display: none;
+  }
+
+  .service-hero .hero-location {
+    flex-basis: 100%;
+  }
+}
+body.service-page .service-stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  width: auto;
+  margin: -28px 20px 18px;
+  padding: 20px 8px;
+  border: 1px solid #edf3f1;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgb(15 70 60 / 4%);
+}
+
+body.service-page .service-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 0 6px;
+  text-align: center;
+}
+
+body.service-page .service-stats > div + div {
+  border-left: 1px solid #edf1f4;
+}
+
+body.service-page .service-stats strong {
+  display: block;
+  color: #008f83;
+  font: 700 18px/1.3 Arial, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+body.service-page .service-stats span {
+  display: block;
+  color: #718096;
+  font: 400 12px/1.4 Arial, sans-serif;
+}
+
+#aboutPanel .content-card {
+  margin-bottom: 16px;
+}
+
+#aboutPanel h2 {
+  margin: 0 0 16px;
+  color: #718096;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+
+#providerBio {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.85;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.provider-detail-list {
+  margin: 0;
+}
+
+.provider-detail-list > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  align-items: start;
+  gap: 16px;
+  padding: 13px 0;
+}
+
+.provider-detail-list > div + div {
+  border-top: 1px solid #f0f4f3;
+}
+
+.provider-detail-list dt {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.provider-detail-list dd {
+  margin: 0;
+  color: #183b45;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.provider-verification {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #dff8f3;
+}
+
+.provider-verification svg {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #00a894;
+  stroke-width: 1.8;
+}
+
+.provider-verification strong {
+  font-size: 14px;
+  color: #164e48;
+}
+
+.provider-verification p {
+  margin: 6px 0 0;
+  color: #52756e;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+#providerReviewSection {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.review-overview {
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  padding: 22px 18px;
+  margin-bottom: 16px;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.review-score {
+  text-align: center;
+}
+
+.review-score > strong {
+  display: block;
+  color: #008f83;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.review-score > small {
+  display: block;
+  margin-top: 7px;
+  color: #718096;
+  font-size: 12px;
+}
+
+.review-stars {
+  color: #f5b700;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.review-bar-row {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  margin: 7px 0;
+  color: #718096;
+  font-size: 11px;
+}
+
+.review-bar-row progress {
+  display: block;
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  appearance: none;
+  border: 0;
+  border-radius: 99px;
+  background: #f0f2f5;
+}
+
+.review-bar-row progress::-webkit-progress-bar {
+  background: #f0f2f5;
+  border-radius: 99px;
+}
+
+.review-bar-row progress::-webkit-progress-value {
+  background: #00b9a5;
+  border-radius: 99px;
+}
+
+.review-bar-row progress::-moz-progress-bar {
+  background: #00b9a5;
+  border-radius: 99px;
+}
+
+.customer-review {
+  margin-bottom: 16px;
+  padding: 20px;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.customer-review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e4f6f2;
+  color: #008f83;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.review-author {
+  min-width: 0;
+  flex: 1;
+}
+
+.review-author strong {
+  display: block;
+  color: #183b45;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.customer-review time {
+  color: #718096;
+  font-size: 11px;
+}
+
+.customer-review > p {
+  margin: 13px 0 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+/* Responsive service profile */
+.mobile-wrapper {
+  max-width: 1120px;
+}
+
+.service-profile {
+  overflow-wrap: anywhere;
+}
+
+.service-panel,
+.content-card,
+.provider-detail-list,
+.hero-meta {
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .service-profile {
+    padding-inline: 32px;
+  }
+
+  .service-work-photos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .service-hero {
+    padding-inline: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .provider-detail-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .service-work-photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-actions {
+    gap: 8px;
+  }
+}
+
+@media (max-height: 500px) {
+  .mobile-wrapper {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .service-profile {
+    overflow: visible;
+  }
+}
+/* Service profile: fill the available screen width */
+body.service-page > .mobile-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin-inline: 0;
+  transition: none;
+}
+/* Center the provider's rating, location, distance, and service labels */
+body.service-page .service-hero .hero-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+
+body.service-page .service-hero #providerDistanceBox,
+body.service-page .service-hero #providerDistance {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.service-page .service-hero .hero-pills {
+  justify-content: center;
+}
+body.service-page .service-hero .hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  text-align: center;
+}
+
+body.service-page .service-hero .hero-meta-dot {
+  display: none;
+}
+
+body.service-page .service-hero .hero-rating,
+
+
+body.service-page .service-hero .hero-pills {
+  justify-content: center;
+}
+.service-hero #providerShopName {
+  margin: 16px 0 0;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.hero-location {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 16px auto 0;
+  max-width: 350px;
+}
+
+.hero-location .icon {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+}
+
+#providerLocation {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+/* ===== FIX PROVIDER LOCATION ===== */
+/* ===== FINAL: CENTER PROVIDER LOCATION AS ONE GROUP ===== */
+
+body.service-page .service-hero .hero-location {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: fit-content !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  gap: 5px !important;
+}
+
+/* Location text container must NOT stretch */
+body.service-page .service-hero .hero-location > div {
+  width: auto !important;
+  max-width: 280px !important;
+  min-width: 0 !important;
+  flex: 0 1 auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  text-align: left !important;
+}
+
+/* Location text */
+body.service-page .service-hero #providerLocation {
+  display: block !important;
+
+  width: auto !important;
+  max-width: 280px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #fff !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+
+  text-align: left !important;
+  white-space: normal !important;
+}
+
+/* Location pin */
+body.service-page .service-hero .hero-location > svg {
+  display: block !important;
+
+  flex: 0 0 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #d4fff4 !important;
+}
+/* =========================================================
+   FINAL FIX — CENTER ALL PROVIDER HERO INFORMATION
+   ========================================================= */
+
+body.service-page .service-hero {
+  text-align: center !important;
+}
+
+/* Rating */
+body.service-page .service-hero .hero-meta {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+/* Rating row itself */
+body.service-page .service-hero .hero-rating {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+/* Location row */
+body.service-page .service-hero .hero-location {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  text-align: center !important;
+}
+
+/* Location icon */
+body.service-page .service-hero .hero-location > svg {
+  flex: 0 0 auto !important;
+  margin: 0 5px 0 0 !important;
+}
+
+/* Location text */
+body.service-page .service-hero #providerLocation {
+  display: block !important;
+
+  width: auto !important;
+  max-width: 100% !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  text-align: center !important;
+}
+
+/* Distance */
+body.service-page .service-hero #providerDistanceBox {
+  display: block !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  margin: 8px auto 0 !important;
+
+  text-align: center !important;
+}
+
+body.service-page .service-hero #providerDistance {
+  display: block !important;
+
+  width: 100% !important;
+
+  margin: 0 auto !important;
+
+  text-align: center !important;
+}
+
+/* Category + availability buttons */
+body.service-page .service-hero .hero-pills {
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  text-align: center !important;
+}
+
+/* Action status */
+body.service-page .service-hero #heroActionStatus {
+  width: 100% !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  text-align: center !important;
+}
+
+/* Shop name */
+body.service-page .service-hero #providerShopName {
+  width: 100% !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  text-align: center !important;
+}
+
+/* Provider name */
+body.service-page .service-hero #providerName {
+  width: 100% !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  text-align: center !important;
+}
+body.service-page .service-hero .hero-location {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+body.service-page .service-hero .hero-location > svg {
+  flex: 0 0 14px !important;
+  width: 14px !important;
+  max-width: 14px !important;
+  height: 14px !important;
+  margin: 0 !important;
+}
+
+body.service-page .service-hero .hero-location > div {
+  flex: 0 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+body.service-page .service-hero #providerLocation {
+  width: auto !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+  </style>
+  <link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+
+<body class="service-page">
+
+  <svg
+    class="icon-definitions"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <symbol id="icon-back" viewBox="0 0 24 24">
+      <path d="M19 12H5m7-7-7 7 7 7"/>
+    </symbol>
+
+    <symbol id="icon-person" viewBox="0 0 24 24">
+      <circle cx="12" cy="7" r="4"/>
+      <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+    </symbol>
+
+    <symbol id="icon-pin" viewBox="0 0 24 24">
+      <path d="M19 9c0 5-7 12-7 12S5 14 5 9a7 7 0 1 1 14 0Z"/>
+      <circle cx="12" cy="9" r="2"/>
+    </symbol>
+
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 7v5l3 2"/>
+    </symbol>
+
+    <symbol id="icon-chat" viewBox="0 0 24 24">
+      <path d="M4 3h16v14H8l-4 4V3Z"/>
+      <path d="M8 8h8m-8 4h5"/>
+    </symbol>
+
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2"/>
+      <path d="M7 3v4m10-4v4M3 11h18"/>
+    </symbol>
+
+    <symbol id="icon-home" viewBox="0 0 24 24">
+      <path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/>
+    </symbol>
+
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="10" cy="10" r="6"/>
+      <path d="m15 15 6 6"/>
+    </symbol>
+
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14"/>
+    </symbol>
+  </svg>
+
+  <div class="mobile-wrapper">
+
+    <main class="service-profile" id="serviceScrollArea">
+
+      <p id="providerLoadStatus" role="status">
+        Loading provider information…
+      </p>
+
+      <div id="providerDetails" hidden>
+
+        
+         <header class="service-hero">
+  <div class="hero-toolbar">
+    <a
+      id="serviceBackButton"
+      class="hero-icon-button"
+      href="rm-profile.html"
+      aria-label="Back to provider profile"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 12H5m7-7-7 7 7 7"/>
+      </svg>
+    </a>
+
+    <div class="hero-toolbar-right">
+      <button
+        id="saveServiceProfile"
+        class="hero-icon-button"
+        type="button"
+        aria-label="Save provider"
+        aria-pressed="false"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>
+        </svg>
+      </button>
+
+      <button
+        id="shareServiceProfile"
+        class="hero-icon-button"
+        type="button"
+        aria-label="Share provider profile"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="hero-avatar-wrap">
+    <span id="providerAvatarFallback" class="service-avatar">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+      </svg>
+    </span>
+
+    <img
+      id="providerPhoto"
+      class="service-avatar"
+      alt="Provider profile photo"
+      hidden
+    >
+
+    <span
+      id="providerVerified"
+      class="hero-verified"
+      aria-label="Verified provider"
+      hidden
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          class="verified-seal"
+          d="m12 1 3 2 3.6.4 1 3.5L22 10l-1 3.5.2 3.6-3.3 1.6L15.5 22 12 21l-3.5 1-2.4-3.3-3.3-1.6.2-3.6L2 10l2.4-3.1 1-3.5L9 3Z"
+        />
+        <path class="verified-check" d="m7 12 3 3 7-7"/>
+      </svg>
+    </span>
+  </div>
+
+<p id="providerShopName" hidden></p>
+<h1 id="providerName"></h1>
+
+  <div class="hero-meta">
+    <div class="hero-rating">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z"/>
+      </svg>
+      <strong id="heroRatingValue">—</strong>
+      <span id="heroReviewCount"></span>
+    </div>
+
+    <span class="hero-meta-dot" aria-hidden="true">•</span>
+
+   <div class="hero-location">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 9c0 5-7 12-7 12S5 14 5 9a7 7 0 1 1 14 0Z"/>
+    <circle cx="12" cy="9" r="2"/>
+  </svg>
+
+  <div>
+    <p id="providerLocation"></p>
+  </div>
+</div>
+
+  <div class="hero-pills">
+    <span id="providerCategory"></span>
+    <span id="heroAvailability"></span>
+  </div>
+
+  <p id="heroActionStatus" role="status"></p>
+  </div>
+</header>
+       <section class="service-stats" aria-label="Provider statistics">
+  <div>
+    <strong id="providerCompleted">—</strong>
+    <span>Completed</span>
+  </div>
+
+  <div>
+    <strong id="providerRating">—</strong>
+    <span>Rating</span>
+  </div>
+
+  <div>
+    <strong id="providerReviews">—</strong>
+    <span>Reviews</span>
+  </div>
+</section>
+
+        <div class="service-tab-wrap">
+          <div
+            class="service-tabs"
+            role="tablist"
+            aria-label="Provider information"
+          >
+            <button
+              id="servicesTab"
+              class="service-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="servicesPanel"
+              tabindex="0"
+            >
+              Services
+            </button>
+
+            <button
+              id="aboutTab"
+              class="service-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="aboutPanel"
+              tabindex="-1"
+            >
+              About
+            </button>
+
+            <button
+              id="reviewsTab"
+              class="service-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="reviewsPanel"
+              tabindex="-1"
+            >
+              Reviews
+            </button>
+          </div>
+        </div>
+
+        <div class="service-panels">
+
+          <section
+            id="servicesPanel"
+            class="service-panel"
+            role="tabpanel"
+            aria-labelledby="servicesTab"
+            tabindex="0"
+          >
+            <div class="content-card availability-card">
+              <svg class="icon" aria-hidden="true">
+                <use href="#icon-clock"/>
+              </svg>
+
+              <div>
+                <h2>Availability</h2>
+                <p id="providerAvailability"></p>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h2>Skills &amp; Services</h2>
+
+              <p class="card-caption">
+                Services and skills offered by this provider.
+              </p>
+
+              <div
+                id="providerSkills"
+                class="service-skills"
+              ></div>
+            </div>
+
+            <div class="content-card">
+              <h2>Work Photos</h2>
+
+              <div
+                id="providerWorkPhotos"
+                class="service-work-photos"
+              ></div>
+            </div>
+          </section>
+
+        <section
+  id="aboutPanel"
+  class="service-panel"
+  role="tabpanel"
+  aria-labelledby="aboutTab"
+  tabindex="0"
+  hidden
+>
+  <div class="content-card">
+    <h2>About</h2>
+    <p id="providerBio"></p>
+  </div>
+
+  <div class="content-card">
+    <h2>Provider Details</h2>
+
+    <dl class="provider-detail-list">
+      <div>
+        <dt>Service Type</dt>
+        <dd id="aboutServiceType">—</dd>
+      </div>
+
+      <div>
+        <dt>Service Location</dt>
+        <dd id="aboutServiceLocation">—</dd>
+      </div>
+
+      <div>
+        <dt>Availability</dt>
+        <dd id="aboutAvailability">—</dd>
+      </div>
+
+      <div>
+        <dt>Jobs Completed</dt>
+        <dd id="aboutCompleted">—</dd>
+      </div>
+
+      <div>
+        <dt>Service Rate</dt>
+        <dd id="aboutPrice">—</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div id="aboutVerified" class="provider-verification" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/>
+      <path d="m8 12 3 3 5-6"/>
+    </svg>
+
+    <div>
+      <strong>Verified Provider</strong>
+      <p>This provider’s account is marked as verified.</p>
+    </div>
+  </div>
+</section>
+
+          <section
+  id="reviewsPanel"
+  class="service-panel"
+  role="tabpanel"
+  aria-labelledby="reviewsTab"
+  tabindex="0"
+  hidden
+>
+  <div id="providerReviewSection" aria-live="polite">
+    <p>Loading reviews…</p>
+  </div>
+</section>
+          </section>
+        </div>
+
+        <p id="providerContactNote" hidden></p>
+      </div>
+    </main>
+
+    <!-- Remains on screen while the profile content scrolls. -->
+    <div
+      class="service-actions"
+      id="serviceActionBar"
+      hidden
+    >
+      <div class="service-rate">
+        <span>Service rate</span>
+        <strong id="providerPrice">—</strong>
+      </div>
+
+      <a
+        id="providerContact"
+        aria-label="Message provider"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-chat"/>
+        </svg>
+        <span>Message</span>
+      </a>
+
+      <a id="providerBook">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-calendar"/>
+        </svg>
+        <span>Book Now</span>
+      </a>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <a href="index.html" class="nav-item">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-home"/>
+        </svg>
+        <span>Home</span>
+      </a>
+
+      <a href="search.html" class="nav-item active">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-search"/>
+        </svg>
+        <span>Search</span>
+      </a>
+
+      <a
+        href="post.html"
+        class="nav-add"
+        aria-label="Post a request"
+      >
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-plus"/>
+        </svg>
+      </a>
+
+      <a href="mybooking.html" class="nav-item">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-calendar"/>
+        </svg>
+        <span>Booking</span>
+      </a>
+
+      <a href="myprofile.html" class="nav-item">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon-person"/>
+        </svg>
+        <span>Profile</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    (() => {
+      const details =
+        document.getElementById("providerDetails");
+
+      const actions =
+        document.getElementById("serviceActionBar");
+
+      const scrollArea =
+        document.getElementById("serviceScrollArea");
+
+      const tabBar =
+        document.querySelector(".service-tab-wrap");
+
+      const tabs = [
+        ...document.querySelectorAll(".service-tab")
+      ];
+
+      function syncActions() {
+        actions.hidden = details.hidden;
+      }
+
+      const observer = new MutationObserver(syncActions);
+
+      observer.observe(details, {
+        attributes: true,
+        attributeFilter: ["hidden"]
+      });
+
+      syncActions();
+
+      function activateTab(selected, moveFocus = false) {
+        const barWasPinned =
+          tabBar.getBoundingClientRect().top <=
+          scrollArea.getBoundingClientRect().top + 2;
+
+        tabs.forEach(tab => {
+          const active = tab === selected;
+
+          tab.setAttribute(
+            "aria-selected",
+            String(active)
+          );
+
+          tab.tabIndex = active ? 0 : -1;
+
+          const panel = document.getElementById(
+            tab.getAttribute("aria-controls")
+          );
+
+          panel.hidden = !active;
+        });
+
+        if (moveFocus) selected.focus();
+
+        if (barWasPinned) {
+          requestAnimationFrame(() => {
+            const offset =
+              tabBar.getBoundingClientRect().top -
+              scrollArea.getBoundingClientRect().top;
+
+            scrollArea.scrollTop += offset;
+          });
+        }
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => {
+          activateTab(tab);
+        });
+
+        tab.addEventListener("keydown", event => {
+          let next = index;
+
+          if (event.key === "ArrowRight") {
+            next = (index + 1) % tabs.length;
+          } else if (event.key === "ArrowLeft") {
+            next = (index - 1 + tabs.length) % tabs.length;
+          } else if (event.key === "Home") {
+            next = 0;
+          } else if (event.key === "End") {
+            next = tabs.length - 1;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          activateTab(tabs[next], true);
+        });
+      });
+    })();
+  </script>
+
+  <script
+    type="module"
+    src="js/reparo-app.js"
+  ></script>
+
+
+  ></script>
+  <script type="module">
+  import { auth, db } from "./js/firebase-core.js";
+import {
+  collection,
+  addDoc,
+  doc,
+  onSnapshot,
+  setDoc,
+  deleteDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+  const $ = id => document.getElementById(id);
+
+  function mirrorText(sourceId, targetId, format) {
+    const source = $(sourceId);
+    const target = $(targetId);
+
+    if (!source || !target) return;
+
+    function update() {
+      const value = source.textContent.trim();
+      target.textContent = format ? format(value) : value;
+    }
+
+    update();
+
+    new MutationObserver(update).observe(source, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  }
+
+  mirrorText(
+    "providerRating",
+    "heroRatingValue",
+    value => {
+      const rating = Number(value);
+
+      return value &&
+        Number.isFinite(rating) &&
+        rating >= 1 &&
+        rating <= 5
+          ? rating.toFixed(1)
+          : "No ratings";
+    }
+  );
+
+  mirrorText(
+    "providerReviews",
+    "heroReviewCount",
+    value => /^\d+$/.test(value) ? `(${value})` : ""
+  );
+
+ 
+
+  const providerId =
+    new URLSearchParams(location.search).get("provider");
+
+  const saveButton = $("saveServiceProfile");
+  const shareButton = $("shareServiceProfile");
+  const status = $("heroActionStatus");
+
+  let saved = false;
+  let stopSaved = null;
+
+  function savedRef() {
+    const uid = auth.currentUser?.uid;
+
+    return uid && providerId
+      ? doc(db, "users", uid, "savedProviders", providerId)
+      : null;
+  }
+
+  function showSavedState() {
+    saveButton.setAttribute("aria-pressed", String(saved));
+    saveButton.setAttribute(
+      "aria-label",
+      saved ? "Remove saved provider" : "Save provider"
+    );
+  }
+
+  const stopAuth = auth.onAuthStateChanged(() => {
+    stopSaved?.();
+    stopSaved = null;
+    saved = false;
+    showSavedState();
+
+    const reference = savedRef();
+    if (!reference) return;
+
+    stopSaved = onSnapshot(
+      reference,
+      snapshot => {
+        saved = snapshot.exists();
+        showSavedState();
+      },
+      error => {
+        console.error("Saved provider:", error);
+        status.textContent = "Could not load saved status.";
+      }
+    );
+  });
+
+  saveButton.addEventListener("click", async () => {
+    const reference = savedRef();
+
+    if (!reference) {
+      status.textContent = "Please sign in before saving a provider.";
+      return;
+    }
+
+    saveButton.disabled = true;
+
+    try {
+      if (saved) {
+        await deleteDoc(reference);
+        status.textContent = "Provider removed from your saved list.";
+      } else {
+        await setDoc(reference, {
+          providerId,
+          createdAt: serverTimestamp()
+        });
+        status.textContent = "Provider saved to your account.";
+      }
+      // The Firestore listener updates the heart automatically.
+    } catch (error) {
+      console.error("Save provider:", error);
+      status.textContent = "Could not update your saved providers.";
+    } finally {
+      saveButton.disabled = false;
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    stopSaved?.();
+    stopAuth();
+  }, { once: true });
+
+  shareButton.addEventListener("click", async () => {
+    if (!providerId) return;
+
+    const uid = auth.currentUser?.uid;
+    if (!uid) {
+      status.textContent = "Please sign in before sharing a provider.";
+      return;
+    }
+
+    const url = new URL("service.html", location.href);
+    url.searchParams.set("provider", providerId);
+
+    const title =
+      $("providerName").textContent.trim() ||
+      "Reparo Service Provider";
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url: url.href });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(url.href);
+        status.textContent = "Profile link copied.";
+      } else {
+        status.textContent = "Sharing is unavailable in this browser.";
+        return;
+      }
+
+      await addDoc(collection(db, "users", uid, "shares"), {
+        providerId,
+        createdAt: serverTimestamp()
+      });
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        console.error("Share provider:", error);
+        status.textContent = "Could not share or record this link.";
+      }
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    stopAuth();
+  }, { once: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "REPARO",
+  "short_name": "REPARO",
+  "description": "Find trusted repair services near you.",
+  "start_url": "/login.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#33af9c",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

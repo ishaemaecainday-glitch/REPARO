@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Become a Provider - Reparo</title>
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- LEAFLET CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+#detectProviderLocation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+#detectProviderLocation .location-icon-circle {
+    margin: 0 auto 8px auto;
+}
+
+#providerLocationTitle {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+#providerLocationText {
+    width: 100%;
+    text-align: center;
+    margin: 4px 0 0 0;
+}
+    #providerLocationMap {
+      width: 100%;
+      height: 240px;
+      margin-top: 14px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      background: #f3f4f6;
+      display: none;
+    }
+
+    .detect-location-btn {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      color: inherit;
+      padding: 0;
+    }
+
+    .provider-location-coordinates {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #667085;
+      text-align: center;
+      display: none;
+    }
+
+  </style>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+
+
+<body>
+
+  <div class="mobile-wrapper provider-registration-page">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header class="provider-header">
+
+      <div class="header-nav">
+
+        <a
+          href="index.html"
+          class="back-btn-circle"
+          aria-label="Go back"
+        >
+
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+            />
+          </svg>
+
+        </a>
+
+
+        <div class="header-titles">
+
+          <h1>
+            Become a Provider
+          </h1>
+
+          <p>
+            Step 1 of 3 - Personal Info
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STEP INDICATORS -->
+
+      <div class="step-progress-bar">
+
+
+        <div class="step-item active">
+
+          <div class="step-pill"></div>
+
+          <span>
+            Personal Info
+          </span>
+
+        </div>
+
+
+        <div class="step-item">
+
+          <div class="step-pill"></div>
+
+          <span>
+            Service Details
+          </span>
+
+        </div>
+
+
+        <div class="step-item">
+
+          <div class="step-pill"></div>
+
+          <span>
+            Documents
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </header>
+
+
+
+    <!-- =====================================
+         FORM BODY
+    ====================================== -->
+
+    <main class="provider-form-container">
+
+
+      <div class="avatar-header">
+
+        <div class="avatar-badge">
+
+          <svg viewBox="0 0 24 24">
+
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+
+          </svg>
+
+        </div>
+
+
+        <h2>
+          Personal Information
+        </h2>
+
+        <p>
+          Tell us about yourself
+        </p>
+
+      </div>
+
+
+
+      <!-- =====================================
+           PROVIDER FORM
+      ====================================== -->
+
+      <form
+        class="provider-form"
+        id="providerStep1Form"
+      >
+
+
+        <!-- FULL NAME -->
+
+        <div class="form-group">
+
+          <label class="required-label">
+
+            Full Name
+
+            <span class="asterisk">
+              *
+            </span>
+
+          </label>
+
+
+          <div class="input-box">
+
+            <svg
+              class="field-icon"
+              viewBox="0 0 24 24"
+            >
+
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+
+            </svg>
+
+
+            <input
+              type="text"
+              id="providerFullName"
+              placeholder="e.g. Juan Dela Cruz"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+<div class="form-group">
+  <label class="required-label" for="providerShopName">
+    Name of Shop
+    <span class="asterisk">*</span>
+  </label>
+
+  <div class="input-box">
+    <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 10V6l2-3h14l2 3v4M4 10v11h16V10M2 10h20M9 21v-7h6v7"/>
+    </svg>
+
+    <input
+      type="text"
+      id="providerShopName"
+      maxlength="100"
+      placeholder="e.g. Juan's Electrical Services"
+      autocomplete="organization"
+      required
+    >
+  </div>
+</div>
+        <!-- CONTACT NUMBER -->
+
+        <div class="form-group">
+
+          <label class="required-label">
+
+            Contact Number
+
+            <span class="asterisk">
+              *
+            </span>
+
+          </label>
+
+
+          <div class="input-box">
+
+            <svg
+              class="field-icon"
+              viewBox="0 0 24 24"
+            >
+
+              <path
+                d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+              />
+
+            </svg>
+
+
+            <input
+              type="tel"
+              id="providerContactNumber"
+              placeholder="+63 9XX XXX XXXX"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             LOCATION + LEAFLET
+        ====================================== -->
+
+        <div class="form-group">
+
+          <label class="required-label">
+
+            Your Location
+
+            <span class="asterisk">
+              *
+            </span>
+
+          </label>
+
+
+          <div
+            class="location-detector-box"
+            id="locationDetector"
+          >
+
+
+            <button
+              type="button"
+              class="detect-location-btn"
+              id="detectProviderLocation"
+            >
+
+
+              <div class="location-icon-circle">
+
+                <svg viewBox="0 0 24 24">
+
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                  />
+
+                </svg>
+
+              </div>
+
+
+              <strong id="providerLocationTitle">
+                Tap to Detect My Location
+              </strong>
+
+
+              <p id="providerLocationText">
+                Use your device GPS to pinpoint your area
+              </p>
+
+
+            </button>
+
+
+
+            <!-- LEAFLET MAP -->
+
+            <div id="providerLocationMap"></div>
+
+
+            <p
+              class="provider-location-coordinates"
+              id="providerCoordinates"
+            ></p>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- HIDDEN LOCATION VALUES -->
+
+        <input
+          type="hidden"
+          id="providerLatitude"
+        >
+
+        <input
+          type="hidden"
+          id="providerLongitude"
+        >
+
+
+
+        <!-- =====================================
+             NEXT BUTTON
+        ====================================== -->
+
+        <button
+          type="submit"
+          class="submit-step-btn"
+          id="providerNextButton"
+        >
+          Next Step
+        </button>
+
+
+      </form>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- LEAFLET JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+
+
+  <!-- FIREBASE -->
+  <script
+    type="module"
+    src="js/reparo-app.js"
+  ></script>
+
+
+</body>
+</html>

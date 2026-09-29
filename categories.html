@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Service Categories - REPARO</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#33af9c">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #eaf1ef;
+      color: #243d44;
+      font-family: Arial, sans-serif;
+    }
+
+    .categories-app {
+      width: 100%;
+      min-height: 100dvh;
+      background: #f6faf9;
+    }
+
+    .categories-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: max(20px, env(safe-area-inset-top)) 20px 24px;
+      background: #33af9c;
+      color: white;
+    }
+
+    .categories-back {
+      display: grid;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 50%;
+      background: #ffffff35;
+      color: white;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    .categories-header h1 {
+      margin: 0;
+      font-size: clamp(20px, 4vw, 26px);
+    }
+
+    .categories-header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    main {
+      padding: 24px 18px 40px;
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .category-tile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid #e1eeea;
+      border-radius: 16px;
+      background: white;
+      color: #243d44;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .category-tile:hover,
+    .category-tile:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #153d3420;
+    }
+
+    .category-tile .cat-icon {
+      display: grid;
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border-radius: 13px;
+    }
+
+    .category-tile .cat-icon svg {
+      width: 23px;
+      height: 23px;
+      fill: currentColor;
+    }
+
+    .category-tile > span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .category-tile .tile-arrow {
+      margin-left: auto;
+      color: #239f91;
+      font-size: 22px;
+    }
+
+    @media (max-width: 600px) {
+      .categories-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .category-tile {
+        flex-direction: row;
+        align-items: center;
+        min-height: 64px;
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+
+      .category-tile .cat-icon {
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+      }
+
+      .category-tile .tile-arrow {
+        display: block;
+        flex-shrink: 0;
+        margin-left: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="categories-app">
+    <header class="categories-header">
+      <a class="categories-back" href="index.html"
+         aria-label="Back to home">←</a>
+
+      <div>
+        <h1>Service Categories</h1>
+        <p>Choose a service to find nearby providers</p>
+      </div>
+    </header>
+
+    <main>
+      <div id="allCategories" class="categories-grid"
+           aria-live="polite">
+        <p>Loading categories…</p>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    async function loadCategories() {
+      const container = document.getElementById("allCategories");
+
+      try {
+        const response = await fetch("index.html");
+        if (!response.ok) throw new Error("Could not load categories");
+
+        const html = await response.text();
+        const documentCopy =
+          new DOMParser().parseFromString(html, "text/html");
+
+        const buttons = [
+          ...documentCopy.querySelectorAll(
+            ".category-grid .category-btn"
+          )
+        ];
+
+        if (!buttons.length) {
+          throw new Error("No categories found");
+        }
+
+        container.replaceChildren();
+
+        for (const button of buttons) {
+          const name =
+            button.querySelector("span")?.textContent.trim();
+
+          const icon = button.querySelector(".cat-icon");
+
+          if (!name || !icon) continue;
+
+          const link = document.createElement("a");
+          link.className = "category-tile";
+          link.href =
+ `search-results.html?q=${encodeURIComponent(name)}&from=categories`;
+          link.setAttribute(
+            "aria-label",
+            `Find nearby ${name} providers`
+          );
+
+          const copiedIcon = document.importNode(icon, true);
+          copiedIcon.setAttribute("aria-hidden", "true");
+
+          const label = document.createElement("span");
+          label.textContent = name;
+
+          const arrow = document.createElement("span");
+          arrow.className = "tile-arrow";
+          arrow.textContent = "›";
+          arrow.setAttribute("aria-hidden", "true");
+
+          link.append(copiedIcon, label, arrow);
+          container.append(link);
+        }
+      } catch (error) {
+        console.error("Load categories:", error);
+        container.textContent =
+          "Could not load categories. Return home and try again.";
+      }
+    }
+
+    loadCategories();
+  </script>
+</body>
+</html>

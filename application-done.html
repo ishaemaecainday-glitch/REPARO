@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Submitted - Reparo</title>
+  <link rel="stylesheet" href="styles.css" />
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+<body>
+<style>.application-steps {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff7ed;
+}
+
+.application-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #344054;
+}
+
+.application-step-icon {
+  display: grid;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.application-step.complete .application-step-icon {
+  background: #bbf7d0;
+  color: #059669;
+}
+
+.application-step.reviewing .application-step-icon {
+  background: #fed7aa;
+  color: #ea580c;
+}
+
+.application-step.waiting .application-step-icon {
+  background: #e5e7eb;
+  color: #667085;
+}</style>
+  <div class="mobile-wrapper provider-registration-page application-done-page">
+    
+    <main class="success-content">
+      
+      <div class="success-top-body">
+        <!-- ORANGE CLOCK ICON -->
+        
+        <div class="success-icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        </div>
+
+        <!-- HEADINGS & DESCRIPTION -->
+        <h1 class="success-title">Application Submitted!</h1>
+        <p class="success-description">
+          Your application is now under review. Our admin team will verify your business permit and documents within <strong>24-48 hours.</strong>
+        </p>
+        <p class="success-subtext">
+          You will receive a notification once your account is approved or if additional information is needed.
+        </p>
+
+        <!-- PROGRESS TRACKER CARD -->
+        <div class="status-tracker-card">
+          
+          <!-- STEP 1: SUBMITTED -->
+       <div class="application-steps">
+  <div class="application-step complete">
+    <span class="application-step-icon" aria-hidden="true">✓</span>
+    <span>Application submitted</span>
+  </div>
+
+  <div class="application-step reviewing">
+    <span class="application-step-icon" aria-hidden="true">⟳</span>
+    <span>Admin review in progress</span>
+  </div>
+
+  <div class="application-step waiting">
+    <span class="application-step-icon" aria-hidden="true">○</span>
+    <span>Account activation</span>
+  </div>
+</div>
+
+        </div>
+      </div>
+
+      <!-- BOTTOM ACTION BUTTON -->
+      <div class="success-footer">
+        <a href="index.html" class="btn-back-home">Back to Home</a>
+      </div>
+
+    </main>
+  </div>
+
+
+<script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>

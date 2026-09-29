@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Permit Renewals | REPARO</title>
+  
+ <link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="admin.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: #f3faf9;
+      font-family: Arial, sans-serif;
+      color: #17332f;
+    }
+
+    .renewal-page {
+      width: min(100% - 32px, 900px);
+      margin: 32px auto;
+    }
+
+    .renewal-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 5px 20px #123c3312;
+    }
+
+    .renewal-card a { color: #147f74; }
+    .renewal-card button {
+      padding: 10px 14px;
+      margin: 8px 8px 0 0;
+      border: 0;
+      border-radius: 8px;
+      background: #269b8c;
+      color: white;
+      cursor: pointer;
+    }
+
+    .renewal-card button.decline { background: #bd5454; }
+    .renewal-card button:disabled { opacity: .6; }
+    .renewal-main {
+  min-width: 0;
+}
+
+.renewal-page {
+  width: min(100%, 900px);
+  margin: 0 auto;
+}
+
+.renewal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border: 1px solid #cce7e2;
+  border-radius: 12px;
+  background: #fff;
+  color: #127c70;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.renewal-back:hover {
+  transform: translateX(-4px);
+  background: #eaf8f5;
+  box-shadow: 0 5px 15px #123c3314;
+}
+
+.renewal-back span:first-child {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.renewal-card {
+  border: 1px solid #e1eeeb;
+  border-left: 4px solid #2ba996;
+}
+
+.renewal-decision-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(420px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 30px;
+  border: 0;
+  border-radius: 20px;
+  background: #fff;
+  color: #17332f;
+  box-shadow: 0 20px 65px #092b2850;
+  text-align: center;
+}
+
+.renewal-decision-dialog::backdrop {
+  background: #08262299;
+}
+
+.decision-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #e4f7f2;
+  color: #158b7d;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.renewal-decision-dialog h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.renewal-decision-dialog p {
+  margin: 0;
+  color: #526b67;
+  line-height: 1.5;
+}
+
+.decision-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.decision-actions button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.decision-cancel {
+  background: #eaf0ef;
+  color: #24443e;
+}
+
+.decision-confirm {
+  background: #239b89;
+  color: #fff;
+}
+
+.decision-confirm.is-decline {
+  background: #ba5555;
+}
+
+@media (max-width: 600px) {
+  .renewal-main {
+    padding: 18px;
+  }
+
+  .renewal-decision-dialog {
+    padding: 24px 18px;
+  }
+}
+.renewal-card {
+  margin: 0 0 18px;
+  padding: 20px;
+  border: 1px solid #dcebe8;
+  border-left: 4px solid #2aa894;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(17, 73, 66, .07);
+}
+
+.renewal-card h2 {
+  margin: 0 0 15px;
+  font-size: clamp(17px, 2vw, 21px);
+}
+
+.renewal-details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.renewal-field {
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #e2eeeb;
+  border-radius: 11px;
+  background: #f5faf9;
+}
+
+.renewal-field-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #60746f;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.renewal-field-value {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: #23423c;
+  font-size: 14px;
+}
+
+.renewal-field-value.status-pending,
+.renewal-field-value.status-approved,
+.renewal-field-value.status-declined {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff0d7;
+  color: #995309;
+}
+
+.status-approved {
+  background: #dff5ea;
+  color: #187347;
+}
+
+.status-declined {
+  background: #fde7e7;
+  color: #a43636;
+}
+
+@media (max-width: 650px) {
+  .renewal-details {
+    grid-template-columns: 1fr;
+  }
+}.admin-sidebar .sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.admin-sidebar .brand-logo {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.admin-sidebar .brand-logo img {
+  width: 220px;
+  height: 46px;
+  padding: 0;
+  object-fit: contain;
+}
+
+.admin-sidebar .brand-title {
+  white-space: nowrap;
+}
+.renewal-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding: 14px;
+  border-radius: 16px;
+  background: #f1f6fa;
+}
+
+.renewal-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.renewal-table th,
+.renewal-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #dce6e9;
+  font-size: 13px;
+}
+
+.renewal-table th {
+  color: #566a72;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.renewal-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.renewal-table tbody tr:hover {
+  background: #e9f4f2;
+}
+
+.renewal-empty {
+  padding: 28px !important;
+  color: #64748b;
+  text-align: center;
+}
+
+.renewal-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff0dc;
+  color: #99570d;
+}
+
+.status-approved {
+  background: #dff5ea;
+  color: #16734b;
+}
+
+.status-declined {
+  background: #fde6e6;
+  color: #a43636;
+}
+
+.renewal-view-btn,
+.permit-approve-btn,
+.permit-decline-btn {
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.renewal-view-btn,
+.permit-approve-btn {
+  background: #269b8c;
+}
+
+.permit-decline-btn {
+  background: #bd5454;
+}
+
+.permit-review-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 20px 20px;
+}
+  </style>
+</head>
+
+<body>
+ <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+  <div class="brand-logo">
+    <img src="logo.png" alt="REPARO logo">
+  </div>
+  <span class="brand-title">REPARO</span>
+</div>
+
+    <div class="sidebar-profile">
+      <div class="profile-avatar-circle">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="#FFF">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <div class="profile-info">
+        <h3>Admin</h3>
+        <p>admin@reparo.sip</p>
+      </div>
+    </div>
+
+    <ul class="nav-list">
+      <li class="nav-item">
+  <a href="admin-index.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-8H4v8zm0-6h4v-4H4v4zm6 0h4V4h-4v8zm6-10v4h4V4h-4zm0 10h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+          </svg>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-approval.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+          </svg>
+          Provider Approval
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-reminders.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+          Renewal Reminders
+        </a>
+      </li>
+      <li class="nav-item active">
+  <a href="admin-permit-renewals.html">
+    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1v5h5M8 12h8m-8 4h8"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Permit Renewals
+  </a>
+</li>
+      <li class="nav-item">
+        <a href="admin-provider.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+          </svg>
+          Registered Provider
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-logs.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.09-4-4L2 17.08l1.5 1.41z"/>
+          </svg>
+          Activity Logs
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-support.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+          </svg>
+          Chat Support
+        </a>
+      </li>
+<li class="nav-item">
+  <a href="admin-complaints.html">
+    <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2 1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2V8h2v5z"/>
+    </svg>
+    Complaints
+  </a>
+</li>
+      <!-- ACCOUNT SETTINGS & LOGOUT SECTION -->
+      <li class="nav-section-title">Account</li>
+      <li class="nav-item">
+        <a href="admin-edit.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+          Edit Profile
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-settings.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+          </svg>
+          Settings
+        </a>
+      </li>
+      <li class="nav-item nav-item-logout">
+        <a href="login.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+          Log Out
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="admin-main renewal-main">
+    <div class="renewal-page">
+  
+    <h1>Submitted Permit Renewals</h1>
+    <p>Review the new permit before updating a provider's approved record.</p>
+
+    <p id="adminRenewalStatus" role="status"></p>
+    <div class="renewal-table-wrap">
+  <table class="renewal-table">
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Previous Expiry</th>
+        <th>New Expiry</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="renewalRequests"></tbody>
+  </table>
+</div>
+    <dialog id="permitViewer" aria-labelledby="permitViewerTitle">
+  <div class="permit-viewer-layout">
+    <header class="permit-viewer-header">
+      <h2 id="permitViewerTitle">Renewed Business Permit</h2>
+
+      <button
+        type="button"
+        class="permit-viewer-exit"
+        id="closePermitViewer"
+      >
+        Exit Preview ×
+      </button>
+    </header>
+
+    <div class="permit-viewer-body" id="permitViewerBody"></div>
+
+<div id="permitReviewActions" class="permit-review-actions"></div>
+</div>
+</dialog>
+    </div>
+
+    <dialog id="renewalDecisionDialog" class="renewal-decision-dialog"
+            aria-labelledby="renewalDecisionTitle">
+      <div class="decision-icon" aria-hidden="true">✓</div>
+      <h2 id="renewalDecisionTitle">Review permit renewal</h2>
+      <p id="renewalDecisionMessage"></p>
+
+      <form method="dialog" class="decision-actions">
+        <button value="cancel" class="decision-cancel">Go back</button>
+        <button value="confirm" class="decision-confirm">Confirm</button>
+      </form>
+    </dialog>
+  </main>
+
+  <script type="module" src="js/permit-renewal.js"></script>
+</body>
+</html>

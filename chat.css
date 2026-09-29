@@ -1,0 +1,1053 @@
+.reparo-chat-body {
+  margin: 0;
+  background: #edf1f2;
+  font-family: Arial, sans-serif;
+}
+
+.reparo-chat-body * {
+  box-sizing: border-box;
+}
+
+.reparo-chat-body [hidden] {
+  display: none !important;
+}
+
+.reparo-chat-body .chat-page {
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.reparo-chat-body .chat-header {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 20px 16px 16px;
+  padding-top: max(20px, env(safe-area-inset-top));
+  background: #fff;
+  color: #293238;
+  border-bottom: 1px solid #f0f2f3;
+  box-shadow: none;
+}
+
+.reparo-chat-body .header-left,
+.reparo-chat-body .user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.reparo-chat-body .header-left {
+  flex: 1;
+}
+
+.reparo-chat-body .back-btn,
+.reparo-chat-body .chat-round-button {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f4f5;
+  color: #46525a;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reparo-chat-body .back-btn svg,
+.reparo-chat-body .chat-round-button svg,
+.reparo-chat-body .chat-booking-banner svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.reparo-chat-body .chat-avatar {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e4f5f1;
+  color: #249e8c;
+}
+
+.chat-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-avatar > svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+.reparo-chat-body .header-titles {
+  min-width: 0;
+}
+
+.reparo-chat-body .header-titles h1 {
+  margin: 0;
+  color: #293238;
+  font-size: 16px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.reparo-chat-body .header-titles .subtitle {
+  margin: 4px 0 0;
+  color: #899398;
+  font-size: 12px;
+}
+
+.chat-booking-banner {
+  margin: 0 16px 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #edf8f5;
+  color: #208e80;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.chat-booking-banner svg {
+  flex-shrink: 0;
+}
+
+#chatBookingState {
+  display: block;
+  margin-top: 4px;
+  text-transform: capitalize;
+  font-size: 11px;
+}
+
+.reparo-chat-body .live-chat-messages {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  padding: 20px 16px;
+  background: #fff;
+}
+
+.reparo-chat-body .live-chat-bubble {
+  position: relative;
+  max-width: 82%;
+  padding: 12px 16px;
+  margin-bottom: 19px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.reparo-chat-body .live-chat-bubble.mine {
+  align-self: flex-end;
+  border-bottom-right-radius: 5px;
+  background: #229e91;
+  color: #fff;
+}
+
+.reparo-chat-body .live-chat-bubble.theirs {
+  align-self: flex-start;
+  border-bottom-left-radius: 5px;
+  background: #eff2f4;
+  color: #39454b;
+}
+
+.reparo-chat-body .live-chat-bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.reparo-chat-body .live-chat-bubble small {
+  position: absolute;
+  top: 100%;
+  right: 4px;
+  margin-top: 4px;
+  color: #8a949a;
+  font-size: 10px;
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.reparo-chat-body .live-chat-bubble.theirs small {
+  right: auto;
+  left: 4px;
+}
+
+.chat-empty-state {
+  margin: auto;
+  padding: 30px 12px;
+  text-align: center;
+}
+
+.chat-empty-state .empty-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eff9f6;
+  color: #249e8c;
+}
+
+.chat-empty-state svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.chat-empty-state h2 {
+  margin: 0 0 8px;
+  color: #556168;
+  font-size: 17px;
+}
+
+.chat-empty-state p {
+  margin: 0;
+  color: #929b9f;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.reparo-chat-body #chatStatus {
+  margin: 0;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.reparo-chat-body .chat-footer {
+  position: static;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid #edf0f2;
+  background: #fff;
+}
+
+.reparo-chat-body .chat-input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 17px;
+  border: 1px solid transparent;
+  border-radius: 25px;
+  outline: none;
+  background: #f1f4f5;
+  color: #344249;
+  font: inherit;
+  font-size: 16px;
+}
+
+.reparo-chat-body .chat-input:focus {
+  border-color: #66c5b8;
+}
+
+.reparo-chat-body .chat-send {
+  background: #e4f4ef;
+  color: #229e91;
+}
+
+.reparo-chat-body button:disabled {
+  opacity: .5;
+  cursor: wait;
+}
+.chat-attachment-menu {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+  margin: 8px 16px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #eef1f3;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(30, 55, 50, .08);
+}
+
+.chat-attachment-menu button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 16px;
+  border: 0;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#chatChoosePhoto {
+  background: #f6efff;
+  color: #9153cf;
+}
+
+#chatSendLocation {
+  background: #eaf8f3;
+  color: #239c88;
+}
+
+.attachment-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff80;
+}
+
+.attachment-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#chatAttachmentToggle svg {
+  transition: transform .2s ease;
+}
+
+#chatAttachmentToggle[aria-expanded="true"] svg {
+  transform: rotate(45deg);
+}
+
+.chat-photo-preview {
+  flex-shrink: 0;
+  margin: 8px 16px;
+  padding: 12px;
+  border: 1px solid #dcebe6;
+  border-radius: 16px;
+  background: #f6fbf9;
+}
+
+.chat-photo-preview > img {
+  display: block;
+  width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.chat-photo-preview > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chat-photo-preview button {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+#chatConfirmPhoto {
+  background: #229e91;
+  color: white;
+}
+
+.live-chat-bubble .chat-message-photo {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.chat-location-link {
+  display: block;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .85);
+  color: #167c70;
+  text-decoration: none;
+  font-weight: 600;
+}
+.reparo-chat-body #chatAttachmentMenu[hidden] {
+  display: none !important;
+}
+
+.reparo-chat-body #chatAttachmentMenu:not([hidden]) {
+  display: flex !important;
+  position: relative;
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+.reparo-chat-body #chatAttachmentToggle {
+  pointer-events: auto;
+}
+.reparo-chat-body .chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+}
+
+.reparo-chat-body .chat-header .header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 10px;
+}
+
+.reparo-chat-body .chat-header .back-btn {
+  position: static;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reparo-chat-body .chat-header .back-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+}
+
+.reparo-chat-body .chat-header .user-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 10px;
+}
+
+.reparo-chat-body .chat-header .chat-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+
+.reparo-chat-body .chat-header .header-titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.reparo-chat-body .chat-header .header-titles h1 {
+  margin: 0;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reparo-chat-body #chatPhoneLink {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+}
+/* =========================================
+   REPARO RESPONSIVE LAYOUT
+   Phones, tablets, laptops, and desktops
+========================================= */
+
+:root {
+  --reparo-app-width: 1120px;
+  --reparo-nav-height: calc(
+    76px + env(safe-area-inset-bottom, 0px)
+  );
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-bottom: 100px;
+}
+
+body {
+  background: #f1f5f4;
+}
+
+/* Main page containers */
+body > .mobile-wrapper,
+body > .app-container,
+body > .mobile-container,
+body > .chat-container,
+body > .book-container,
+.messages-page .chat-container {
+  width: 100%;
+  max-width: var(--reparo-app-width);
+  min-width: 0;
+  margin-inline: auto;
+  background-color: #fff;
+}
+
+body > .mobile-wrapper {
+  padding-bottom: calc(var(--reparo-nav-height) + 24px);
+}
+
+/* Keep forms comfortable to read */
+body > .provider-registration-page,
+body > .mobile-container.post-request-page,
+body > .book-container {
+  max-width: 720px;
+}
+
+body.login-page > .app-container,
+.signup-page .signup-container {
+  max-width: 560px;
+}
+
+/* Prevent oversized media and form controls */
+img,
+video {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input,
+textarea,
+select {
+  scroll-margin-block: 100px;
+}
+
+/* Allow flex items to shrink properly */
+.input-wrapper,
+.input-box,
+.search-box,
+.search-input-wrapper,
+.provider-info,
+.provider-text,
+.user-info,
+.greeting-text,
+.header-titles,
+.row-left,
+.toggle-text,
+.info-value,
+.chat-info,
+.provider-card > *,
+.booking-card-header > *,
+.notification-item > * {
+  min-width: 0;
+}
+
+.search-box input,
+.search-input-wrapper input {
+  flex: 1;
+  width: 100%;
+}
+
+/* Wrap long names, addresses, and email addresses */
+.profile-fullname,
+.profile-email,
+.profile-location-text,
+.location-bar,
+.provider-info,
+.info-value,
+.setting-desc,
+.status-text,
+.skill-tag,
+.notification-item,
+.detail-row,
+.provider-text {
+  overflow-wrap: anywhere;
+}
+
+.header-actions,
+.back-btn,
+.back-btn-circle,
+.hamburger-btn,
+.circle-btn {
+  flex-shrink: 0;
+}
+
+/* Keep bottom navigation aligned with the page */
+body .bottom-nav,
+.messages-page .bottom-nav,
+.messages-page .messages-bottom-nav {
+  width: 100%;
+  max-width: var(--reparo-app-width);
+
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+
+  height: auto;
+  min-height: var(--reparo-nav-height);
+
+  padding-bottom: max(
+    8px,
+    env(safe-area-inset-bottom, 0px)
+  );
+}
+
+.bottom-nav .nav-item {
+  min-width: 0;
+  min-height: 44px;
+  text-align: center;
+}
+
+/* Keep floating chat near the page edge */
+body a.floating-chat {
+  right: max(
+    16px,
+    calc((100vw - var(--reparo-app-width)) / 2 + 16px)
+  );
+}
+
+/* Drawer fits the available screen height */
+.side-drawer {
+  height: 100vh;
+  height: 100dvh;
+  max-width: min(340px, 90vw);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Allow long filter rows to scroll horizontally */
+.sort-bar,
+.filter-chips,
+.help-categories,
+.tabs-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.sort-chip,
+.filter-chips .chip,
+.help-categories .chip {
+  flex-shrink: 0;
+}
+
+/* Flexible grids */
+.category-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.category-btn {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.service-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-card {
+  min-width: 0;
+}
+
+/* Provider application controls */
+.skills-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-tag {
+  max-width: 100%;
+}
+
+.skill-tag .remove-skill-btn {
+  flex-shrink: 0;
+}
+
+.button-actions-row {
+  gap: 12px;
+}
+
+.button-actions-row .btn-step {
+  min-width: 0;
+  min-height: 48px;
+  height: auto;
+}
+
+/* Keyboard navigation */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid #0f766e;
+  outline-offset: 3px;
+}
+
+/* =========================================
+   TABLETS AND DESKTOPS
+========================================= */
+
+@media (min-width: 768px) {
+  .header,
+  .content,
+  .search-page .search-body,
+  .bookings-container,
+  .settings-container,
+  .help-content,
+  .safety-content {
+    padding-inline: 32px;
+  }
+
+  .category-grid {
+    gap: 24px;
+  }
+
+  .cat-icon {
+    width: 68px;
+    height: 68px;
+  }
+
+  .results-list,
+  .nearby-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .results-list > :only-child,
+  .nearby-list > :only-child {
+    grid-column: 1 / -1;
+  }
+
+  .provider-form-container,
+  .request-form {
+    padding-inline: 32px;
+  }
+
+  .settings-container,
+  .help-content,
+  .safety-content {
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  .app-container:not(.chat-page) > .content {
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .login-page .form-section {
+    padding: 32px 40px;
+  }
+
+  .service-promos .promo-card {
+    flex-basis: calc((100% - 14px) / 2);
+  }
+
+  #communityRequests {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  #communityRequests > :only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================
+   PHONES
+========================================= */
+
+@media (max-width: 600px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,
+  textarea,
+  .search-box input,
+  .input-box input,
+  .input-control {
+    font-size: 16px;
+  }
+
+  .header,
+  .content,
+  .bookings-container,
+  .settings-container,
+  .provider-form-container,
+  .help-content,
+  .safety-content {
+    padding-inline: 16px;
+  }
+
+  .header-top {
+    gap: 8px;
+  }
+
+  .header-top .user-info {
+    gap: 8px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .main-title {
+    font-size: clamp(21px, 6vw, 28px);
+  }
+
+  .category-grid {
+    gap: 16px 6px;
+  }
+
+  .cat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .category-btn {
+    font-size: 11px;
+  }
+
+  .banner-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .info-row {
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .info-value {
+    text-align: right;
+  }
+
+  .booking-card-footer,
+  .rate-banner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .step-item {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .step-pill {
+    padding-inline: 6px;
+    white-space: normal;
+  }
+
+  .step-progress-bar {
+    gap: 6px;
+  }
+
+  .form-section {
+    padding-inline: 20px;
+  }
+
+  .success-title {
+    font-size: clamp(22px, 7vw, 30px);
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+  .header,
+  .content,
+  .provider-form-container {
+    padding-inline: 12px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .service-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .greeting-text strong {
+    font-size: 14px;
+  }
+
+  .header-top {
+    flex-wrap: wrap;
+  }
+
+  .header-top .header-actions {
+    margin-left: auto;
+  }
+
+  .skills-input-group {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skills-input-group .btn-add-skill {
+    min-height: 44px;
+  }
+
+  .label-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .button-actions-row {
+    gap: 8px;
+  }
+}
+
+/* Easier tapping on touchscreens */
+@media (pointer: coarse) {
+  .sort-chip,
+  .chip,
+  .tab-btn,
+  .password-toggle,
+  .signup-password-toggle,
+  .search-btn,
+  .detect-location-btn {
+    min-height: 44px;
+  }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* Responsive chat layout */
+.reparo-chat-body .chat-page {
+  max-width: 900px;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.reparo-chat-body .chat-header {
+  padding-top: max(16px, env(safe-area-inset-top));
+}
+
+.reparo-chat-body .live-chat-bubble {
+  max-width: min(82%, 600px);
+}
+
+.reparo-chat-body .chat-attachment-menu,
+.reparo-chat-body .chat-photo-preview {
+  max-height: 30dvh;
+  overflow-y: auto;
+}
+
+@media (max-width: 360px) {
+  .reparo-chat-body .chat-header,
+  .reparo-chat-body .chat-footer {
+    padding-inline: 10px;
+    gap: 6px;
+  }
+
+  .reparo-chat-body .chat-header .header-left,
+  .reparo-chat-body .chat-header .user-info {
+    gap: 6px;
+  }
+
+  .reparo-chat-body .chat-input {
+    padding-inline: 10px;
+  }
+}
+
+@media (max-height: 500px) {
+  .reparo-chat-body .chat-header {
+    padding-block: 6px;
+  }
+
+  .reparo-chat-body .chat-booking-banner {
+    padding-block: 6px;
+    margin-bottom: 4px;
+  }
+
+  .reparo-chat-body .chat-footer {
+    padding-block: 6px;
+  }
+}
+/* Chat page: remove the desktop width limit */
+body.reparo-chat-body .app-container.chat-page {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin-inline: 0;
+
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: none;
+}
+
+/* Keep the conversation scrollable */
+body.reparo-chat-body .live-chat-messages {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+/* Keep the header and message input visible */
+body.reparo-chat-body .chat-header,
+body.reparo-chat-body .chat-footer {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  flex-shrink: 0;
+}
+
+body.reparo-chat-body .chat-input {
+  flex: 1;
+  min-width: 0;
+}

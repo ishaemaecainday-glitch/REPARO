@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  
+  <style>
+  html:not([data-role-ui-ready="true"]) [data-role-ui],
+  html:not([data-role-ui-ready="true"]) #customerProviderSwitch {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+</style>
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" >
+  <link rel="icon" href="data:,">
+
+
+<style>
+  #homeLocationDialog {
+    width: min(620px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 18px;
+    border: 0;
+    border-radius: 18px;
+    color: #243444;
+    overflow-y: auto;
+  }
+
+  #homeLocationDialog::backdrop {
+    background: rgb(0 0 0 / 50%);
+  }
+
+  #homeLocationDialog .map-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  #homeLocationDialog h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  #homeLocationDialog button {
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #33af9c;
+    color: white;
+    cursor: pointer;
+  }
+
+  #homeLiveMap {
+    height: min(420px, 55dvh);
+    border-radius: 12px;
+    background: #eff2f6;
+  }
+
+  #homeMapStatus {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparo - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .cat-icon svg,
+        .menu-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            display: block;
+        }
+
+        .reparo-home .header {
+            padding-bottom: 24px;
+        }
+
+        .reparo-home .search-box {
+            box-sizing: border-box;
+            height: 42px;
+            min-height: 0;
+            padding: 4px 12px 4px 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .reparo-home .search-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .reparo-home .search-btn svg {
+            display: block;
+        }
+
+        .reparo-home .content {
+            padding-top: 16px;
+        }
+    </style>
+    <link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+<body class="reparo-home">
+
+    <div class="mobile-wrapper">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-top">
+                <div class="user-info">
+                    <button class="icon-btn hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                    </button>
+                  <div class="greeting-text">
+  <span id="timeGreeting">Hello 👋</span>
+    <strong class="profile-fullname">User</strong>
+</div>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn circle-btn" aria-label="Location">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </button>
+                    <a href="notification.html" class="icon-btn circle-btn badge-btn" aria-label="Notifications" style="pointer-events: auto; cursor: pointer; z-index: 10;">
+                        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                        <span class="notification-badge" style="pointer-events: none;"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="location-bar">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span id="homeLocationText"></span>
+            </div>
+
+            <h1 class="main-title">Find Trusted Repair<br>Services Near You</h1>
+
+            <!-- Clicking search bar goes to search.html -->
+            <a href="search.html" class="search-box" style="text-decoration: none;">
+                <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" placeholder="Search electrician, auto...." readonly style="cursor: pointer;">
+                <div class="search-btn" aria-label="Submit search">
+                    <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                </div>
+            </a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Service Categories -->
+            <div class="section-header">
+                <h2>Service Categories</h2>
+                <a class="see-all" href="categories.html">See all</a>
+            </div>
+
+            <div class="category-grid">
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #FEF08A; color: #EAB308;">
+                        <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                    </div>
+                    <span>Electrician</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #DBEAFE; color: #2563EB;">
+                        <svg viewBox="0 0 24 24"><path d="M12 11c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 2c0-3.31-2.69-6-6-6s-6 2.69-6 6c0 2.22 1.21 4.15 3 5.19l1-1.73c-1.19-.69-2-1.97-2-3.46 0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.49-.81 2.77-2 3.46l1 1.73c1.79-1.04 3-2.97 3-5.19zM12 3C6.48 3 2 7.48 2 13c0 3.7 2.01 6.93 5 8.63l1-1.73C5.58 18.39 4 15.88 4 13c0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.88-1.58 5.39-4 6.9l1 1.73c2.99-1.7 5-4.93 5-8.63 0-5.52-4.48-10-10-10z"/></svg>
+                    </div>
+                    <span>AC Repair</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #CFFAFE; color: #06B6D4;">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                    </div>
+                    <span>Plumber</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #FEF08A; color: #CA8A04;">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </div>
+                    <span>Appliance</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #FEF9C3; color: #854D0E;">
+                        <svg viewBox="0 0 24 24"><path d="M13.78 15.3l1.41 1.41 2.12-2.12 3.53 3.53-1.41 1.42 1.41 1.41 2.83-2.83-1.41-1.41 1.41-1.41-3.53-3.54 2.12-2.12-1.41-1.41-7.07 7.07zm-4.24-4.24L3 17.58V21h3.42l6.52-6.52-3.4-3.42z"/></svg>
+                    </div>
+                    <span>Carpenter</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #FEE2E2; color: #EF4444;">
+                        <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                    </div>
+                    <span>Auto tech</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #FEF08A; color: #CA8A04;">
+                        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                    </div>
+                    <span>Gadget Tech</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #E5E7EB; color: #374151;">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    </div>
+                    <span>Locksmith</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #DCFCE7; color: #16A34A;">
+                        <svg viewBox="0 0 24 24"><path d="M19 9.3V4h-3v2.6L12 3 2 12h3v8h5v-6h4v6h5v-8h3l-3-2.7z"/></svg>
+                    </div>
+                    <span>Roofing</span>
+                </button>
+                <button class="category-btn">
+                    <div class="cat-icon" style="background-color: #FBCFE8; color: #DB2777;">
+                        <svg viewBox="0 0 24 24"><path d="M22 19h-2v-4h-2v4h-2v-6h-2v6h-2v-8H8v8H2v2h20v-2zM12 3c-1.1 0-2 .9-2 2v4h4V5c0-1.1-.9-2-2-2z"/></svg>
+                    </div>
+                    <span>Welder</span>
+                </button>
+            </div>
+
+            <!-- Banners Section -->
+          <section class="service-promos" aria-label="Service options">
+  <div class="promo-controls">
+    <span>Explore services</span>
+    <div>
+      <button type="button" id="promoPrevious"
+              aria-label="Previous card" aria-controls="promoTrack">←</button>
+      <button type="button" id="promoNext"
+              aria-label="Next card" aria-controls="promoTrack">→</button>
+    </div>
+  </div>
+
+  <div class="promo-track" id="promoTrack">
+    <a href="be-provider.html" class="promo-card promo-provider"data-role-ui>
+      <span class="promo-symbol" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M14.7 6.3a5.5 5.5 0 0 0-6.9 6.9L3 18a2.1 2.1 0 0 0 3 3l4.8-4.8a5.5 5.5 0 0 0 6.9-6.9l-3.4 3.4-3-3z"/>
+        </svg>
+      </span>
+
+      <span class="promo-copy">
+        <small>GROW YOUR BUSINESS</small>
+        <strong>Become a<br>Service Provider</strong>
+        <span>Register your repair business and reach more customers.</span>
+        <span class="promo-action">Get started <span aria-hidden="true">→</span></span>
+      </span>
+    </a>
+<a href="search.html" class="promo-card promo-emergency">
+  <span class="promo-symbol" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 17v-5a6 6 0 0 1 12 0v5M4 17h16v4H4zM12 1v2M3 5l2 2M21 5l-2 2M1 12h2M21 12h2"/>
+      <path d="m13 8-3 5h4l-3 4"/>
+    </svg>
+  </span>
+
+  <span class="promo-copy">
+    <small>NEED URGENT REPAIRS?</small>
+    <strong>Emergency<br>Service</strong>
+    <span>Find repair assistance when you need it most.</span>
+    <span class="promo-action">
+      Find help <span aria-hidden="true">→</span>
+    </span>
+  </span>
+</a>
+  </div>
+</section>
+
+         <!-- TOP RATED -->
+          <div class="home-feed">
+  <section class="top-rated-section nearby-section">
+  <div class="section-header">
+    <h2>Top Rated Near You</h2>
+    <a href="search-results.html?nearby=1">See all</a>
+  </div>
+
+  <p id="nearbyStatus" class="nearby-status" role="status">
+    Finding providers near your current location…
+  </p>
+
+  <button id="nearbyRetry" type="button" hidden>
+    Try location again
+  </button>
+
+  <div id="nearbyProviders" class="nearby-list"></div>
+</section>
+  </section>
+
+  <section class="community-section">
+    <div class="community-section-header">
+      <h2>Community Requests</h2>
+      <a href="community.html" class="community-see-all">
+        See all
+      </a>
+    </div>
+
+    <p class="community-section-subtitle">
+      Service requests posted by customers
+    </p>
+
+    <p id="communityLoading" role="status">
+      Loading community requests…
+    </p>
+
+    <div id="communityRequests"></div>
+  </section>
+</div>
+        <!-- Floating Chat Icon -->
+      <a href="message.html?from=customer"
+   class="floating-chat"
+   aria-label="Open Messages">
+  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+  </svg>
+</a>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item active">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <span>Search</span>
+            </a>
+            <a href="post.html" class="fab-btn" aria-label="Post a Request">
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </a>
+            <a href="mybooking.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                <span>Booking</span>
+            </a>
+            <a href="myprofile.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Side Drawer Overlay -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <!-- Side Drawer -->
+    <aside class="side-drawer" id="sideDrawer">
+        <div class="drawer-header">
+            <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
+            <div class="drawer-user-profile">
+                <div class="avatar-circle">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                
+            <div class="drawer-user-info">
+    <h3 class="profile-fullname">User</h3>
+    <span>Customer</span>
+</div>
+            </div>
+
+            <div class="drawer-stats">
+                <div class="stat-item">
+                    <strong>0</strong>
+                    <span>Bookings</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <strong>0</strong>
+                 <span>Shares</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <strong>0</strong>
+                    <span>Saved</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="drawer-body">
+            <div class="menu-section">
+                <span class="menu-label">SERVICES</span>
+              <a href="categories.html" class="menu-item">
+    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span>
+    <span>All Repair Services</span>
+</a>
+                <a href="post.html" class="menu-item">
+                    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>
+                    <span>Post a Request</span>
+                <a href="be-provider.html" class="menu-item" data-role-ui>
+  <span class="menu-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"/>
+    </svg>
+  </span>
+  <span>Become a Provider</span>
+</a>
+            </div>
+
+            <div class="menu-section">
+               <span class="menu-label">SUPPORT</span>
+
+<a
+  href="chat.html?with=KKutxcZ55YSls3WKMuvfgvMZjKA3&from=customer&back=home"
+  class="menu-item"
+>
+  <span class="menu-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 4h16v13H8l-4 4V4zm3 4h10M7 12h7"
+            fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span>Chat Support</span>
+</a>
+
+<a href="faq.html" class="menu-item">
+                    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg></span>
+                    <span>FAQ</span>
+                </a>
+                <a href="safety.html" class="menu-item">
+                    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4z"/></svg></span>
+                    <span>Safety Tips</span>
+                </a>
+                <a href="web-rate.html" class="menu-item">
+                    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    <span>Rate the App</span>
+                </a>
+            </div>
+
+            <div class="menu-section">
+                <span class="menu-label">ACCOUNT SETTINGS</span>
+                <a href="settings.html" class="menu-item">
+                    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6-3.6z"/></svg></span>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="menu-item logout">
+                    <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></span>
+                    <span>Log Out</span>
+                </a>
+            </div>
+
+            <div class="drawer-footer">
+                <span>Reparo App v1.0.0</span>
+            </div>
+        </div>
+    </aside>
+
+<script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const drawerClose = document.getElementById('drawerClose');
+
+    function openDrawer() {
+        sideDrawer.classList.add('active');
+        drawerOverlay.classList.add('active');
+    }
+
+    function closeDrawer() {
+        sideDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+    }
+
+    hamburgerBtn.addEventListener('click', openDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+
+    // Expand/Collapse Service Categories
+    
+    document.querySelectorAll(".category-grid .category-btn").forEach(button => {
+  button.type = "button";
+
+  button.addEventListener("click", () => {
+    const category = button.querySelector("span")?.textContent.trim();
+    if (!category) return;
+
+   window.location.href =
+  `search-results.html?q=${encodeURIComponent(category)}&from=home`;
+  });
+});
+    
+</script>
+<dialog id="homeLocationDialog" aria-labelledby="homeMapTitle">
+  <div class="map-heading">
+    <h2 id="homeMapTitle">Your current location</h2>
+    <button id="closeHomeMap" type="button">Close</button>
+  </div>
+
+  <div id="homeLiveMap"></div>
+  <p id="homeMapStatus" role="status">Waiting for location…</p>
+  <button id="locateHomeAgain" type="button">Locate me</button>
+</dialog>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="js/reparo-app.js"></script>
+<script>
+  (() => {
+    const track = document.getElementById("promoTrack");
+    if (!track) return;
+
+    function slide(direction) {
+      const cards = [...track.children];
+      const current = cards.reduce((nearest, card, index) => {
+        const distance = Math.abs(
+          card.getBoundingClientRect().left -
+          track.getBoundingClientRect().left
+        );
+
+        return distance < nearest.distance
+          ? { index, distance }
+          : nearest;
+      }, { index: 0, distance: Infinity }).index;
+
+      const target = cards[
+        Math.max(0, Math.min(cards.length - 1, current + direction))
+      ];
+
+      track.scrollBy({
+        left:
+          target.getBoundingClientRect().left -
+          track.getBoundingClientRect().left - 2,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth"
+      });
+    }
+
+    document.getElementById("promoPrevious")
+      .addEventListener("click", () => slide(-1));
+
+    document.getElementById("promoNext")
+      .addEventListener("click", () => slide(1));
+  })();
+</script>
+<script>
+  function updateTimeGreeting() {
+    const greeting = document.getElementById("timeGreeting");
+    if (!greeting) return;
+
+    const hour = new Date().getHours(); // Customer's local device time
+
+    if (hour < 12) {
+      greeting.textContent = "Good morning 👋";
+    } else if (hour < 18) {
+      greeting.textContent = "Good afternoon 👋";
+    } else {
+      greeting.textContent = "Good evening 👋";
+    }
+  }
+
+  updateTimeGreeting();
+  setInterval(updateTimeGreeting, 60 * 1000);
+</script>
+</body>
+</html>

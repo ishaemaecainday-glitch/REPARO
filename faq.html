@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reparo - Help Center</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+<body>
+
+    <div class="mobile-wrapper">
+        <!-- Header -->
+        <header class="help-header">
+            <div class="help-header-top">
+                <button class="back-btn" onclick="history.back()" aria-label="Go back">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <div class="help-header-title">
+                    <h1>FAQ</h1>
+                    <p>Answers to your common questions</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="help-search-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="#94A3B8">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" placeholder="Search for help...">
+            </div>
+        </header>
+
+        <!-- Category Chips -->
+        <div class="help-categories">
+            <button class="chip active">All</button>
+            <button class="chip">Bookings</button>
+            <button class="chip">Payments</button>
+            <button class="chip">Account</button>
+            <button class="chip">Safety</button>
+        </div>
+
+        <!-- FAQ Accordion List -->
+        <main class="help-content">
+
+            <!-- Item 1 -->
+            <details class="faq-card" open>
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">BOOKINGS</span>
+                        <h3 class="faq-question">How do I book a service provider?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Open the Search tab, pick the repair category you need, and choose a provider near you. Tap the booking button, select your preferred date and time, then confirm. You will receive a notification once the provider accepts your request.</p>
+                </div>
+            </details>
+
+            <!-- Item 2 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">BOOKINGS</span>
+                        <h3 class="faq-question">Can I reschedule or cancel a booking?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Yes. Go to your Booking tab, open the booking you want to change, and tap Reschedule or Cancel. We recommend doing this at least 2 hours before the scheduled service to avoid any cancellation fee.</p>
+                </div>
+            </details>
+
+            <!-- Item 3 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">BOOKINGS</span>
+                        <h3 class="faq-question">How do I know the provider is on the way?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Once the provider starts traveling, you will get a 'Provider On The Way' notification with their estimated arrival time. You can also chat with them directly from the Messages tab.</p>
+                </div>
+            </details>
+
+            <!-- Item 4 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">PAYMENTS</span>
+                        <h3 class="faq-question">What payment methods are accepted?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>We accept Cash, GCash, Maya, and major Credit or Debit cards. You can choose your preferred payment method during checkout.</p>
+                </div>
+            </details>
+
+            <!-- Item 5 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">PAYMENTS</span>
+                        <h3 class="faq-question">Do I pay before or after the service?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Payment is placed on hold when you book and is only released to the provider after you confirm that the service has been completed to your satisfaction.</p>
+                </div>
+            </details>
+
+            <!-- Item 6 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">PAYMENTS</span>
+                        <h3 class="faq-question">How are refunds handled?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>If a booking is cancelled by the provider or the service was not delivered, your payment is refunded to your original payment method within 3 to 5 business days. You can track the status in the Booking details screen.</p>
+                </div>
+            </details>
+
+            <!-- Item 7 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">ACCOUNT</span>
+                        <h3 class="faq-question">How do I update my profile information?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Go to Account Settings, select Edit Profile, update your contact or personal information, and tap Save Changes.</p>
+                </div>
+            </details>
+
+            <!-- Item 8 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">ACCOUNT</span>
+                        <h3 class="faq-question">How do I change my password?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Navigate to Settings, select Security, and tap Change Password. Enter your current password followed by your new password.</p>
+                </div>
+            </details>
+
+            <!-- Item 9 -->
+            <details class="faq-card">
+                <summary class="faq-header">
+                    <div class="faq-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#00BA9F"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                    </div>
+                    <div class="faq-title-wrap">
+                        <span class="faq-tag">SAFETY</span>
+                        <h3 class="faq-question">Are the providers verified?</h3>
+                    </div>
+                    <div class="faq-chevron">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#64748B"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                </summary>
+                <div class="faq-answer">
+                    <p>Every provider on REPARO submits a valid business permit and a government-issued ID. Verified providers show a green check badge on their profile so you can book with confidence.</p>
+                </div>
+            </details>
+
+        </main>
+    </div>
+
+
+<script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>

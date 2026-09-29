@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Become a Provider - Step 2 - Reparo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="be-provider2.css" />
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+<body>
+
+  <div class="mobile-wrapper provider-registration-page">
+    
+    <!-- TOP HEADER -->
+    <header class="provider-header">
+      <div class="header-nav">
+        <a href="be-provider.html" class="back-btn-circle" aria-label="Go back">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </a>
+        <div class="header-titles">
+          <h1>Become a Provider</h1>
+          <p>Step 2 of 3 - Service Details</p>
+        </div>
+      </div>
+
+      <!-- STEP INDICATORS -->
+      <div class="step-progress-bar">
+        <div class="step-item active">
+          <div class="step-pill"></div>
+          <span>Personal Info</span>
+        </div>
+        <div class="step-item active">
+          <div class="step-pill"></div>
+          <span>Service Details</span>
+        </div>
+        <div class="step-item">
+          <div class="step-pill"></div>
+          <span>Documents</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- FORM BODY -->
+    <main class="provider-form-container">
+      
+      <!-- AVATAR / ICON HEADER -->
+      <div class="avatar-header">
+        <div class="avatar-badge">
+          <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.6C.4 7 1 10 3 12c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.4-.4.4-1.1 0-1.5z"/></svg>
+        </div>
+        <h2>Service Details</h2>
+        <p>What repair service do you provide?</p>
+      </div>
+
+      <!-- FORM FIELDS -->
+    <form class="provider-form" action="be-provider3.html" method="GET">
+        
+       
+   <!-- SERVICE CATEGORY -->
+<div class="form-group">
+
+  <label class="required-label">
+    Service Category
+    <span class="asterisk">*</span>
+  </label>
+
+  <div class="input-box select-wrapper">
+
+    <svg class="field-icon" viewBox="0 0 24 24">
+      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+    </svg>
+
+    <select
+      id="providerServiceCategory"
+      required
+    >
+      <option value="" disabled selected>
+        Select a service type..
+      </option>
+
+      <option value="electrician">Electrician</option>
+      <option value="ac_repair">AC Repair</option>
+      <option value="plumber">Plumber</option>
+      <option value="appliance">Appliance Repair</option>
+      <option value="carpenter">Carpenter</option>
+      <option value="auto_tech">Auto Tech</option>
+      <option value="gadget_tech">Gadget Repair</option>
+      <option value="locksmith">Locksmith</option>
+      <option value="roofing">Roofing</option>
+      <option value="welder">Welder</option>
+
+      <option value="other">Other</option>
+    </select>
+
+    <svg class="chevron-icon" viewBox="0 0 24 24">
+      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+    </svg>
+
+  </div>
+
+
+  <!-- SHOW ONLY WHEN OTHER IS SELECTED -->
+  <div
+    id="otherServiceGroup"
+    style="display:none; margin-top:10px;"
+  >
+
+    <div class="input-box">
+
+      <input
+        type="text"
+        id="otherServiceInput"
+        placeholder="Type your service here..."
+        maxlength="60"
+      >
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- SKILLS / SPECIALIZATION -->
+<div class="form-group">
+
+  <div class="label-row">
+
+    <label class="required-label">
+      Your Skills / Specialization
+      <span class="asterisk">*</span>
+    </label>
+
+    <span
+      class="count-text"
+      id="skillCount"
+    >
+      (0/8)
+    </span>
+
+  </div>
+
+
+  <div class="skills-input-group">
+
+    <input
+      type="text"
+      class="skills-input"
+      id="skillInput"
+      placeholder="e.g. Wiring"
+      maxlength="50"
+    >
+
+    <button
+      type="button"
+      class="btn-add-skill"
+      id="addSkillButton"
+    >
+      Add
+    </button>
+
+  </div>
+
+
+  <!-- ADDED SKILLS SHOW HERE -->
+  <div
+    id="skillsList"
+    class="skills-list"
+  ></div>
+
+
+  <small class="skills-help">
+    Add up to 8 skills or specializations.
+  </small>
+
+</div>
+        <!-- ABOUT YOUR SERVICE -->
+        <div class="form-group">
+          <label class="required-label">About Your Service <span class="asterisk">*</span></label>
+          <textarea class="service-textarea" maxlength="500" placeholder="Describe your experience years of service, specialities, and why customers should choose you.." required></textarea>
+          <div class="char-counter">0/500</div>
+        </div>
+
+        <!-- ACTION BUTTONS: PREVIOUS & NEXT -->
+        <div class="button-actions-row">
+          <a href="be-provider.html" class="btn-step btn-prev">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Previous
+          </a>
+          <button type="submit" class="btn-step btn-next">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </button>
+        </div>
+
+      </form>
+
+    </main>
+
+  </div>
+
+
+<script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Become a Provider - Step 3 - Reparo</title>
+  <link rel="stylesheet" href="styles.css" />
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+<body>
+
+  <div class="mobile-wrapper provider-registration-page">
+    
+    <!-- TOP HEADER -->
+    <header class="provider-header">
+      <div class="header-nav">
+        <a href="be-provider2.html" class="back-btn-circle" aria-label="Go back">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </a>
+        <div class="header-titles">
+          <h1>Become a Provider</h1>
+          <p>Step 3 of 3 - Documents</p>
+        </div>
+      </div>
+
+      <!-- STEP INDICATORS -->
+      <div class="step-progress-bar">
+        <div class="step-item">
+          <div class="step-pill"></div>
+          <span>Personal Info</span>
+        </div>
+        <div class="step-item">
+          <div class="step-pill"></div>
+          <span>Service Details</span>
+        </div>
+        <div class="step-item active">
+          <div class="step-pill"></div>
+          <span>Documents</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- FORM BODY -->
+    <main class="provider-form-container">
+      
+      <!-- ICON HEADER -->
+      <div class="avatar-header">
+        <div class="avatar-badge">
+          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+        </div>
+        <h2>Upload Documents</h2>
+        <p>Required for verification</p>
+      </div>
+
+      <!-- FORM FIELDS -->
+    <form
+  class="provider-form"
+  id="providerStep3Form"
+>
+       <!-- PROFILE PHOTO UPLOAD -->
+<div class="form-group">
+
+  <label class="required-label">
+    Profile Photo
+    <span class="asterisk">*</span>
+  </label>
+
+  <div class="upload-dropzone dropzone-dashed-teal">
+
+    <input
+      type="file"
+      id="providerProfilePhoto"
+      accept="image/jpeg,image/png,image/webp"
+      required
+      class="file-input-overlay"
+    />
+
+    <div class="upload-icon-circle">
+      <svg viewBox="0 0 24 24">
+        <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+      </svg>
+    </div>
+
+    <strong>
+      Upload Profile Photo
+    </strong>
+
+    <span>
+      JPG, PNG - max 5MB
+    </span>
+
+  </div>
+
+</div>
+<div class="upload-dropzone dropzone-dashed-gray">
+
+  <input
+    type="file"
+    id="providerPermitFile"
+    accept="image/jpeg,image/png,image/webp,application/pdf"
+    required
+    class="file-input-overlay"
+  />
+
+  <div class="upload-icon-circle bg-light-orange">
+    <svg viewBox="0 0 24 24">
+      <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+    </svg>
+  </div>
+
+  <strong>
+    Upload Business Permit
+  </strong>
+
+  <span>
+    JPG, PNG, PDF - max 10MB
+  </span>
+
+</div>
+        <!-- EXPIRY DATE -->
+        <div class="form-group">
+          <label class="required-label">Expiry Date <span class="asterisk">*</span></label>
+          <div class="input-box">
+           <input
+  type="date"
+  id="providerPermitExpiry"
+  required
+/>
+          </div>
+        </div>
+
+        <!-- NO BUSINESS PERMIT BANNER -->
+        <div class="help-registration-card">
+          <div class="help-title">
+            <div class="help-question-icon">?</div>
+            <div>
+              <strong>Don't have a Business Permit Yet?</strong>
+              <span>click this link to register</span>
+            </div>
+          </div>
+
+          <a href="https://www.filipizen.com/partners/camsur_sipocot/bpls/newbusiness" target="_blank" class="help-link-btn teal-btn">
+            <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            <span>https://www.filipizen.com/partners/camsur_sipocot/bpls/newbusiness</span>
+          </a>
+
+          <div class="help-link-btn outline-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
+            <span>Apply at your near Local LGU</span>
+          </div>
+        </div>
+
+        <!-- CERTIFICATION DISCLAIMER -->
+        <div class="certification-box">
+          <div class="check-circle-icon">✓</div>
+          <p>By submitting you certify that all information provided is accurate and that your business permit is valid. False submissions will be permanently banned.</p>
+        </div>
+
+        <!-- ACTION BUTTONS ROW (PREVIOUS & SUBMIT) -->
+        <div class="button-actions-row">
+          <a href="be-provider2.html" class="btn-step btn-prev">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Previous
+          </a>
+        <button
+  type="submit"
+  class="btn-step btn-next"
+  id="submitProviderApplication"
+>
+  Submit Application
+</button>
+        </div>
+
+      </form>
+
+    </main>
+
+  </div>
+
+
+<script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>

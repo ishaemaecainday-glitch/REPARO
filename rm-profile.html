@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>Reparo - Provider Profile</title>
+
+  
+
+  <link rel="stylesheet" href="provider-profile.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+
+<body>
+  <svg class="icon-definitions"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+
+    <symbol id="profile-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="7" r="4"/>
+      <path d="M4 21v-2a8 8 0 0 1 16 0v2"/>
+    </symbol>
+
+    <symbol id="profile-home" viewBox="0 0 24 24">
+      <path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/>
+    </symbol>
+
+    <symbol id="profile-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2"/>
+      <path d="M7 3v4m10-4v4M3 11h18"/>
+    </symbol>
+
+    <symbol id="profile-chat" viewBox="0 0 24 24">
+      <path d="M4 3h16v14H8l-4 4V3Z"/>
+      <path d="M8 8h8m-8 4h5"/>
+    </symbol>
+
+    <symbol id="profile-pin" viewBox="0 0 24 24">
+      <path d="M19 9c0 5-7 12-7 12S5 14 5 9a7 7 0 1 1 14 0Z"/>
+      <circle cx="12" cy="9" r="2"/>
+    </symbol>
+
+    <symbol id="profile-star" viewBox="0 0 24 24">
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/>
+    </symbol>
+
+    <symbol id="profile-mail" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="m3 6 9 7 9-7"/>
+    </symbol>
+
+    <symbol id="profile-phone" viewBox="0 0 24 24">
+      <path d="M5 3h4l2 5-3 2a15 15 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2C9 21 3 15 3 5a2 2 0 0 1 2-2Z"/>
+    </symbol>
+
+    <symbol id="profile-settings" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="m9 3-.5 3-2 1-3-.5-2 3 2 2v2l-2 2 2 3 3-.5 2 1 .5 3h4l.5-3 2-1 3 .5 2-3-2-2v-2l2-2-2-3-3 .5-2-1-.5-3Z"/>
+    </symbol>
+
+    <symbol id="profile-logout" viewBox="0 0 24 24">
+      <path d="M9 4H4v16h5M9 12h12m-4-4 4 4-4 4"/>
+    </symbol>
+  </svg>
+
+  <div class="profile-app">
+    <header class="profile-header">
+      <div class="profile-top">
+        <h1>My Profile</h1>
+
+        <a href="rm-settings.html"
+           class="settings-link"
+           aria-label="Account settings">
+          <svg aria-hidden="true">
+            <use href="#profile-settings"/>
+          </svg>
+        </a>
+      </div>
+
+     <div id="providerAvatar" class="profile-avatar" hidden>
+  <img id="providerPhoto" alt="Provider profile photo">
+</div>
+
+       
+
+      <h2 id="providerName">Loading profile…</h2>
+      <p id="providerEmail"></p>
+      <p id="providerService"></p>
+
+      <div class="hero-location">
+        <svg aria-hidden="true"><use href="#profile-pin"/></svg>
+        <span id="providerLocation">Loading saved location…</span>
+      </div>
+    </header>
+
+    <main>
+      <p id="profileStatus" role="status"></p>
+
+      <section class="profile-stats" aria-label="Provider statistics">
+        <a href="rm-booking.html" class="stat">
+          <svg aria-hidden="true"><use href="#profile-calendar"/></svg>
+          <strong id="providerBookings">…</strong>
+          <span>Bookings</span>
+        </a>
+
+        <div class="stat">
+          <svg aria-hidden="true"><use href="#profile-star"/></svg>
+          <strong id="providerRating">…</strong>
+          <span>Rating</span>
+        </div>
+
+        <div class="stat">
+          <svg aria-hidden="true"><use href="#profile-chat"/></svg>
+          <strong id="providerReviews">…</strong>
+          <span>Reviews</span>
+        </div>
+      </section>
+
+      <section class="profile-card">
+        <div class="section-heading">
+          <h2>Account Info</h2>
+          <a href="rm-settings.html">Settings</a>
+        </div>
+
+        <div class="info-row">
+          <svg aria-hidden="true"><use href="#profile-user"/></svg>
+          <div>
+            <span>Full Name</span>
+            <strong id="accountName">…</strong>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <svg aria-hidden="true"><use href="#profile-mail"/></svg>
+          <div>
+            <span>Email</span>
+            <strong id="accountEmail">…</strong>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <svg aria-hidden="true"><use href="#profile-phone"/></svg>
+          <div>
+            <span>Phone</span>
+            <strong id="accountPhone">…</strong>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <svg aria-hidden="true"><use href="#profile-pin"/></svg>
+          <div>
+            <span>Saved Location</span>
+            <strong id="accountLocation">…</strong>
+          </div>
+        </div>
+      </section>
+  <section class="profile-card service-details-card">
+  <div class="service-details-heading">
+    <span class="service-details-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M14.7 6.3a4 4 0 0 0-5 5L3 18v3h3l6.7-6.7a4 4 0 0 0 5-5l-3 3-3-3 3-3Z"/>
+      </svg>
+    </span>
+
+    <div class="service-details-text">
+      <h2>Service Details</h2>
+      <p>Manage the services shown on your profile.</p>
+    </div>
+  </div>
+
+  <a class="service-details-link" href="rm-service-details.html">
+    <span>Edit Service Details</span>
+    <span aria-hidden="true">→</span>
+  </a>
+</section>
+<section class="profile-card permit-card" aria-labelledby="permitCardTitle">
+  <div class="permit-card-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1v5h5M8 12h8m-8 4h8"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="permit-card-content">
+    <h2 id="permitCardTitle">Business Permit</h2>
+    <p>Have a renewed permit? Send it for admin review.</p>
+  </div>
+
+  <a class="permit-card-link" href="rm-permit-renewal.html">
+    Upload permit <span aria-hidden="true">→</span>
+  </a>
+</section>
+      <button id="providerLogout" class="logout-button" type="button">
+        <svg aria-hidden="true"><use href="#profile-logout"/></svg>
+        <span>Log Out</span>
+      </button>
+    </main>
+
+    <nav class="profile-bottom-nav" aria-label="Provider navigation">
+      <a href="rm-index.html">
+        <svg aria-hidden="true"><use href="#profile-home"/></svg>
+        <span>Home</span>
+      </a>
+
+      <a href="rm-booking.html">
+        <svg aria-hidden="true"><use href="#profile-calendar"/></svg>
+        <span>Booking</span>
+      </a>
+
+      <a href="message.html?from=provider">
+        <svg aria-hidden="true"><use href="#profile-chat"/></svg>
+        <span>Message</span>
+      </a>
+
+      <a href="rm-profile.html" aria-current="page">
+        <svg aria-hidden="true"><use href="#profile-user"/></svg>
+        <span>Profile</span>
+      </a>
+    </nav>
+  </div>
+
+ 
+
+  <script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>

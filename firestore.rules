@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function self(uid) { return signedIn() && request.auth.uid == uid; }
+    function userDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function isAdmin() { return signedIn() && userDoc().data.role == 'admin'; }
+    function isProvider() { return signedIn() && (userDoc().data.role == 'provider' || userDoc().data.role == 'admin'); }
+
+    match /users/{uid} {
+      allow create: if self(uid) && request.resource.data.uid == request.auth.uid && request.resource.data.role == 'user';
+      allow read: if self(uid) || isAdmin() || (signedIn() && resource.data.role == 'provider');
+      allow update: if isAdmin() || (self(uid)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.role == resource.data.role);
+      allow delete: if self(uid) || isAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if signedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.status == 'pending';
+      allow read: if signedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        resource.data.providerId == request.auth.uid || isAdmin());
+      allow update: if signedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        resource.data.providerId == request.auth.uid || isAdmin());
+      allow delete: if signedIn() && (resource.data.customerId == request.auth.uid || isAdmin());
+    }
+
+    match /providerApplications/{applicationId} {
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid && request.resource.data.status == 'pending';
+      allow read: if signedIn() && (resource.data.ownerId == request.auth.uid || isAdmin());
+      allow update: if isAdmin() || (signedIn() && resource.data.ownerId == request.auth.uid && resource.data.status == 'pending');
+      allow delete: if isAdmin() || (signedIn() && resource.data.ownerId == request.auth.uid && resource.data.status == 'pending');
+    }
+
+    match /serviceRequests/{requestId} {
+      allow create: if signedIn() && request.resource.data.customerId == request.auth.uid;
+      allow read: if signedIn();
+      allow update, delete: if signedIn() && (resource.data.customerId == request.auth.uid || isAdmin());
+    }
+
+    match /notifications/{notificationId} {
+      allow create: if signedIn();
+      allow read, update, delete: if signedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    match /messages/{messageId} {
+      allow create: if signedIn() && request.resource.data.senderId == request.auth.uid;
+      allow read: if signedIn() && (resource.data.senderId == request.auth.uid || resource.data.receiverId == request.auth.uid || isAdmin());
+      allow update, delete: if signedIn() && (resource.data.senderId == request.auth.uid || isAdmin());
+    }
+
+    match /feedback/{feedbackId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAdmin();
+      allow update, delete: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+    }
+
+    match /activityLogs/{logId} {
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /adminReminders/{reminderId} {
+      allow create, read, update, delete: if isAdmin();
+    }
+
+    match /connectionChecks/{uid} {
+      allow read, create, update, delete: if self(uid);
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

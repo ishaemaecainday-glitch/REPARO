@@ -1,0 +1,527 @@
+/* Keep the original provider design from styles.css.
+   Only extra styles needed for dynamic skills are here. */
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    background: #e9f8f5;
+    color: #249f8c;
+
+    border: 1px solid #b8e8df;
+    border-radius: 20px;
+
+    padding: 6px 10px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.remove-skill-btn {
+    border: none;
+    background: transparent;
+
+    color: #249f8c;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    padding: 0;
+    margin: 0;
+
+    cursor: pointer;
+}
+
+.skills-help {
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 10px;
+    color: #8a8f98;
+}
+
+.btn-add-skill:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+/* =========================================
+   REPARO RESPONSIVE LAYOUT
+   Phones, tablets, laptops, and desktops
+========================================= */
+
+:root {
+  --reparo-app-width: 1120px;
+  --reparo-nav-height: calc(
+    76px + env(safe-area-inset-bottom, 0px)
+  );
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-bottom: 100px;
+}
+
+body {
+  background: #f1f5f4;
+}
+
+/* Main page containers */
+body > .mobile-wrapper,
+body > .app-container,
+body > .mobile-container,
+body > .chat-container,
+body > .book-container,
+.messages-page .chat-container {
+  width: 100%;
+  max-width: var(--reparo-app-width);
+  min-width: 0;
+  margin-inline: auto;
+  background-color: #fff;
+}
+
+body > .mobile-wrapper {
+  padding-bottom: calc(var(--reparo-nav-height) + 24px);
+}
+
+/* Keep forms comfortable to read */
+body > .provider-registration-page,
+body > .mobile-container.post-request-page,
+body > .book-container {
+  max-width: 720px;
+}
+
+body.login-page > .app-container,
+.signup-page .signup-container {
+  max-width: 560px;
+}
+
+/* Prevent oversized media and form controls */
+img,
+video {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input,
+textarea,
+select {
+  scroll-margin-block: 100px;
+}
+
+/* Allow flex items to shrink properly */
+.input-wrapper,
+.input-box,
+.search-box,
+.search-input-wrapper,
+.provider-info,
+.provider-text,
+.user-info,
+.greeting-text,
+.header-titles,
+.row-left,
+.toggle-text,
+.info-value,
+.chat-info,
+.provider-card > *,
+.booking-card-header > *,
+.notification-item > * {
+  min-width: 0;
+}
+
+.search-box input,
+.search-input-wrapper input {
+  flex: 1;
+  width: 100%;
+}
+
+/* Wrap long names, addresses, and email addresses */
+.profile-fullname,
+.profile-email,
+.profile-location-text,
+.location-bar,
+.provider-info,
+.info-value,
+.setting-desc,
+.status-text,
+.skill-tag,
+.notification-item,
+.detail-row,
+.provider-text {
+  overflow-wrap: anywhere;
+}
+
+.header-actions,
+.back-btn,
+.back-btn-circle,
+.hamburger-btn,
+.circle-btn {
+  flex-shrink: 0;
+}
+
+/* Keep bottom navigation aligned with the page */
+body .bottom-nav,
+.messages-page .bottom-nav,
+.messages-page .messages-bottom-nav {
+  width: 100%;
+  max-width: var(--reparo-app-width);
+
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+
+  height: auto;
+  min-height: var(--reparo-nav-height);
+
+  padding-bottom: max(
+    8px,
+    env(safe-area-inset-bottom, 0px)
+  );
+}
+
+.bottom-nav .nav-item {
+  min-width: 0;
+  min-height: 44px;
+  text-align: center;
+}
+
+/* Keep floating chat near the page edge */
+body a.floating-chat {
+  right: max(
+    16px,
+    calc((100vw - var(--reparo-app-width)) / 2 + 16px)
+  );
+}
+
+/* Drawer fits the available screen height */
+.side-drawer {
+  height: 100vh;
+  height: 100dvh;
+  max-width: min(340px, 90vw);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Allow long filter rows to scroll horizontally */
+.sort-bar,
+.filter-chips,
+.help-categories,
+.tabs-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.sort-chip,
+.filter-chips .chip,
+.help-categories .chip {
+  flex-shrink: 0;
+}
+
+/* Flexible grids */
+.category-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.category-btn {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.service-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-card {
+  min-width: 0;
+}
+
+/* Provider application controls */
+.skills-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-tag {
+  max-width: 100%;
+}
+
+.skill-tag .remove-skill-btn {
+  flex-shrink: 0;
+}
+
+.button-actions-row {
+  gap: 12px;
+}
+
+.button-actions-row .btn-step {
+  min-width: 0;
+  min-height: 48px;
+  height: auto;
+}
+
+/* Keyboard navigation */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid #0f766e;
+  outline-offset: 3px;
+}
+
+/* =========================================
+   TABLETS AND DESKTOPS
+========================================= */
+
+@media (min-width: 768px) {
+  .header,
+  .content,
+  .search-page .search-body,
+  .bookings-container,
+  .settings-container,
+  .help-content,
+  .safety-content {
+    padding-inline: 32px;
+  }
+
+  .category-grid {
+    gap: 24px;
+  }
+
+  .cat-icon {
+    width: 68px;
+    height: 68px;
+  }
+
+  .results-list,
+  .nearby-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .results-list > :only-child,
+  .nearby-list > :only-child {
+    grid-column: 1 / -1;
+  }
+
+  .provider-form-container,
+  .request-form {
+    padding-inline: 32px;
+  }
+
+  .settings-container,
+  .help-content,
+  .safety-content {
+    max-width: 860px;
+    margin-inline: auto;
+  }
+
+  .app-container:not(.chat-page) > .content {
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .login-page .form-section {
+    padding: 32px 40px;
+  }
+
+  .service-promos .promo-card {
+    flex-basis: calc((100% - 14px) / 2);
+  }
+
+  #communityRequests {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  #communityRequests > :only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================================
+   PHONES
+========================================= */
+
+@media (max-width: 600px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,
+  textarea,
+  .search-box input,
+  .input-box input,
+  .input-control {
+    font-size: 16px;
+  }
+
+  .header,
+  .content,
+  .bookings-container,
+  .settings-container,
+  .provider-form-container,
+  .help-content,
+  .safety-content {
+    padding-inline: 16px;
+  }
+
+  .header-top {
+    gap: 8px;
+  }
+
+  .header-top .user-info {
+    gap: 8px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .main-title {
+    font-size: clamp(21px, 6vw, 28px);
+  }
+
+  .category-grid {
+    gap: 16px 6px;
+  }
+
+  .cat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .category-btn {
+    font-size: 11px;
+  }
+
+  .banner-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .info-row {
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .info-value {
+    text-align: right;
+  }
+
+  .booking-card-footer,
+  .rate-banner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .step-item {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .step-pill {
+    padding-inline: 6px;
+    white-space: normal;
+  }
+
+  .step-progress-bar {
+    gap: 6px;
+  }
+
+  .form-section {
+    padding-inline: 20px;
+  }
+
+  .success-title {
+    font-size: clamp(22px, 7vw, 30px);
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+  .header,
+  .content,
+  .provider-form-container {
+    padding-inline: 12px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .service-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .greeting-text strong {
+    font-size: 14px;
+  }
+
+  .header-top {
+    flex-wrap: wrap;
+  }
+
+  .header-top .header-actions {
+    margin-left: auto;
+  }
+
+  .skills-input-group {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skills-input-group .btn-add-skill {
+    min-height: 44px;
+  }
+
+  .label-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .button-actions-row {
+    gap: 8px;
+  }
+}
+
+/* Easier tapping on touchscreens */
+@media (pointer: coarse) {
+  .sort-chip,
+  .chip,
+  .tab-btn,
+  .password-toggle,
+  .signup-password-toggle,
+  .search-btn,
+  .detect-location-btn {
+    min-height: 44px;
+  }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

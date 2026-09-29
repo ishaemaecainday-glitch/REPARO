@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>REPARO - Settings</title>
+  <link rel="stylesheet" href="admin.css">
+ <link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--admin-sidebar-bg)">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+      </div>
+      <span class="brand-title">REPARO</span>
+    </div>
+
+    <div class="sidebar-profile">
+      <div class="profile-avatar-circle">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="#FFF">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <div class="profile-info">
+        <h3>Admin</h3>
+        <p>admin@reparo.ph</p>
+      </div>
+    </div>
+
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="admin-index.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-8H4v8zm0-6h4v-4H4v4zm6 0h4V4h-4v8zm6-10v4h4V4h-4zm0 10h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+          </svg>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-approval.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+          </svg>
+          Provider Approval
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-reminders.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+          Renewal Reminders
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-provider.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+          </svg>
+          Registered Provider
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-logs.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.09-4-4L2 17.08l1.5 1.41z"/>
+          </svg>
+          Activity Logs
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="admin-support.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+          </svg>
+          Chat Support
+        </a>
+      </li>
+
+      <li class="nav-section-title">Account</li>
+      <li class="nav-item">
+        <a href="admin-edit.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+          Edit Profile
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a href="admin-settings.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+          </svg>
+          Settings
+        </a>
+      </li>
+      <li class="nav-item nav-item-logout">
+        <a href="login.html">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+          Log Out
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <main class="admin-main">
+    <header class="top-bar">
+      <div class="header-title">
+        <h1>Settings</h1>
+      </div>
+      <div class="header-actions">
+        <div class="search-bar-box">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="notification-circle">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          <span class="badge">5</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="settings-container">
+      <!-- NOTIFICATIONS SECTION -->
+      <div class="settings-card">
+        <div class="settings-card-header">
+          <div class="settings-icon-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#0d9488">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+          </div>
+          <div>
+            <h2>Notifications</h2>
+            <p>Choose how you want to be alerted</p>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-item-meta">
+            <svg class="setting-item-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <div>
+              <h3>Email Notifications</h3>
+              <p>Updates about approvals, bookings and account activity</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-item-meta">
+            <svg class="setting-item-icon" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+            <div>
+              <h3>Push Notifications</h3>
+              <p>Instant alerts in your browser</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-item-meta">
+            <svg class="setting-item-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
+            <div>
+              <h3>SMS Alerts</h3>
+              <p>Text messages for urgent items</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-item-meta">
+            <svg class="setting-item-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg>
+            <div>
+              <h3>Weekly Summary Report</h3>
+              <p>Key platform stats every Monday</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- PREFERENCES SECTION -->
+      <div class="settings-card">
+        <div class="settings-card-header">
+          <div class="settings-icon-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#0d9488">
+              <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+            </svg>
+          </div>
+          <div>
+            <h2>Preferences</h2>
+            <p>Regional and workflow settings</p>
+          </div>
+        </div>
+
+        <div class="select-grid">
+          <div class="form-group">
+            <label>Language</label>
+            <select class="settings-select">
+              <option selected>English (Philippines)</option>
+              <option>Filipino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Timezone</label>
+            <select class="settings-select">
+              <option selected>(GMT+8) Manila Time</option>
+              <option>(GMT+0) UTC</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-item-meta">
+            <svg class="setting-item-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            <div>
+              <h3>Auto-approve verified providers</h3>
+              <p>Automatically approve providers with valid permits</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-item-meta">
+            <svg class="setting-item-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            <div>
+              <h3>Two-Factor Authentication</h3>
+              <p>Add an extra layer of security to your account</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- SECURITY SECTION -->
+      <div class="settings-card">
+        <div class="settings-card-header">
+          <div class="settings-icon-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="#0d9488">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+          </div>
+          <div>
+            <h2>Security</h2>
+            <p>Change your password</p>
+          </div>
+        </div>
+
+        <form class="security-form">
+          <div class="form-group full-width">
+            <label>Current Password</label>
+            <input type="password" placeholder="Enter current password">
+          </div>
+          <div class="select-grid">
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" placeholder="New password">
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" placeholder="Re-type new password">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-update">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+
+<script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>

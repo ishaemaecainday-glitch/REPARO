@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Service Details - Reparo</title>
+
+  <link rel="stylesheet" href="provider-settings.css">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#33af9c">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+</head>
+
+<body>
+  <div class="settings-app">
+    <header class="settings-header">
+      <a href="rm-profile.html" class="back-button"
+         aria-label="Back to My Profile">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 12H5m7-7-7 7 7 7"/>
+        </svg>
+      </a>
+
+      <div>
+        <h1>Service Details</h1>
+        <p>Manage the services shown on your profile</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="settings-card">
+        <h2>Edit Service Details</h2>
+        <p class="muted">Your saved details will appear below.</p>
+
+        <form id="profileServiceForm">
+          <label for="profileServiceCategory">Service category</label>
+          <input id="profileServiceCategory" name="serviceCategory"
+                 type="text" maxlength="80" required>
+
+          <label for="profileServiceSkills">Skills</label>
+          <input id="profileServiceSkills" name="skills"
+                 type="text" maxlength="500"
+                 placeholder="Separate skills with commas">
+
+          <label for="profileServicePrice">Service rate (₱)</label>
+          <input id="profileServicePrice" name="price"
+                 type="number" min="0" max="1000000" step="0.01">
+
+          <label for="profileServiceAvailability">
+            Availability / working hours
+          </label>
+          <input id="profileServiceAvailability"
+                 name="availability" type="text" maxlength="200"
+                 placeholder="Monday–Saturday, 8 AM–5 PM">
+
+          <label for="profileServiceBio">About your services</label>
+          <textarea id="profileServiceBio" name="bio"
+                    rows="4" maxlength="1500"></textarea>
+
+          <div class="form-actions">
+            <a class="secondary" href="rm-profile.html">Cancel</a>
+            <button type="submit" id="saveProfileService">
+              Save Services
+            </button>
+          </div>
+
+          <p id="profileServiceStatus" class="form-status"
+             role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="js/provider-profile-services.js"></script>
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#33af9c">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+  <title>Renew Business Permit | REPARO</title>
+
+  <style>
+    :root {
+      --teal: #2ca394;
+      --teal-dark: #187f74;
+      --text: #183633;
+      --muted: #617875;
+      --line: #dcebe7;
+      --background: #f2faf8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(51, 175, 156, .16),
+          transparent 38%
+        ),
+        var(--background);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .renewal-page {
+      width: min(100% - 32px, 680px);
+      margin: 0 auto;
+      padding: 22px 0 48px;
+    }
+
+    /* Back navigation */
+    .page-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .back-button {
+      display: grid;
+      place-items: center;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      color: var(--teal-dark);
+      text-decoration: none;
+      box-shadow: 0 3px 12px rgba(24, 74, 65, .07);
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
+
+    .back-button svg {
+      width: 21px;
+      height: 21px;
+      fill: currentColor;
+      transition: transform .2s;
+    }
+
+    .back-button:hover {
+      transform: translateX(-2px);
+      background: #e9f7f3;
+      box-shadow: 0 5px 16px rgba(24, 74, 65, .12);
+    }
+
+    .back-button:hover svg {
+      transform: translateX(-2px);
+    }
+
+    .back-button:focus-visible,
+    .upload-area:focus-within,
+    #renewalSubmit:focus-visible {
+      outline: 3px solid rgba(44, 163, 148, .35);
+      outline-offset: 3px;
+    }
+
+    .page-top-text small {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .page-top-text strong {
+      font-size: .98rem;
+    }
+
+    /* Page heading */
+    .hero {
+      padding: 27px 26px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #32ab9b, #168b7e);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(24, 127, 116, .18);
+    }
+
+    .hero-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .18);
+    }
+
+    .hero-icon svg {
+      width: 25px;
+      height: 25px;
+      fill: white;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.45rem, 4vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 50ch;
+      margin: 0;
+      color: rgba(255, 255, 255, .94);
+      font-size: .94rem;
+      line-height: 1.55;
+    }
+
+    /* Main content */
+    .renewal-card {
+      margin-top: 18px;
+      padding: 25px;
+      border: 1px solid #e9f2ef;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(21, 67, 58, .07);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 7px;
+      font-size: 1.12rem;
+    }
+
+    .section-number {
+      display: grid;
+      place-items: center;
+      flex: 0 0 27px;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: #e3f6f1;
+      color: var(--teal-dark);
+      font-size: .83rem;
+      font-weight: 700;
+    }
+
+    .section-description {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+
+    .current-permit {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 0 0 25px;
+      padding: 14px 15px;
+      border: 1px solid #d6eee8;
+      border-radius: 13px;
+      background: #f1faf7;
+    }
+
+    .current-permit svg {
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      fill: var(--teal-dark);
+    }
+
+    #currentPermit {
+      margin: 0;
+      font-size: .89rem;
+      line-height: 1.45;
+    }
+
+    #pendingRenewal:not(:empty) {
+      margin: 0 0 20px;
+      padding: 13px 15px;
+      border-radius: 12px;
+      background: #fff5df;
+      color: #785416;
+      font-size: .88rem;
+      line-height: 1.5;
+    }
+
+    .field-label {
+      display: block;
+      margin: 0 0 9px;
+      font-size: .89rem;
+      font-weight: 700;
+    }
+
+    /* Interactive file selector */
+    .upload-area {
+      display: block;
+      padding: 22px 15px;
+      border: 2px dashed #a9d8cd;
+      border-radius: 16px;
+      background: #f8fcfb;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+
+    .upload-area:hover,
+    .upload-area.dragging {
+      transform: translateY(-2px);
+      border-color: var(--teal);
+      background: #ecf9f5;
+    }
+
+    .upload-area input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .upload-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 10px;
+      border-radius: 14px;
+      background: #e1f5ef;
+      color: var(--teal-dark);
+    }
+
+    .upload-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .upload-area strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: .94rem;
+    }
+
+    .upload-area span:last-child {
+      color: var(--muted);
+      font-size: .79rem;
+      line-height: 1.4;
+    }
+
+    #selectedFile:not(:empty) {
+      margin: 11px 0 0;
+      color: var(--teal-dark);
+      font-size: .86rem;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    #filePreview {
+      display: block;
+      max-width: 100%;
+      max-height: 230px;
+      margin: 14px auto 0;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    #filePreview[hidden] {
+      display: none;
+    }
+
+    .date-section {
+      margin-top: 28px;
+    }
+
+    #renewedExpiry {
+      display: block;
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 14px;
+      border: 1px solid #cbded9;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    #renewedExpiry:focus {
+      border-color: var(--teal);
+      outline: 3px solid rgba(44, 163, 148, .15);
+    }
+
+    .date-help {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    #renewalSubmit {
+      width: 100%;
+      min-height: 50px;
+      margin-top: 27px;
+      padding: 12px 17px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--teal);
+      color: #fff;
+      font-size: .94rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(44, 163, 148, .2);
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
+
+    #renewalSubmit:not(:disabled):hover {
+      transform: translateY(-2px);
+      background: var(--teal-dark);
+      box-shadow: 0 9px 19px rgba(44, 163, 148, .25);
+    }
+
+    #renewalSubmit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    #renewalStatus:not(:empty) {
+      margin: 17px 0 0;
+      padding: 13px 14px;
+      border-radius: 11px;
+      background: #edf8f5;
+      color: #176f65;
+      font-size: .87rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 500px) {
+      .renewal-page {
+        width: 100%;
+        padding: 16px 14px 32px;
+      }
+
+      .page-top {
+        margin-bottom: 18px;
+      }
+
+      .hero {
+        padding: 23px 20px;
+        border-radius: 19px;
+      }
+
+      .renewal-card {
+        padding: 20px 17px;
+        border-radius: 19px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .back-button,
+      .back-button svg,
+      .upload-area,
+      #renewalSubmit {
+        transition: none;
+      }
+    }
+    #renewalSuccess {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  width: min(400px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 28px 24px;
+  overflow: auto;
+  border: 0;
+  border-radius: 20px;
+  background: #fff;
+  color: #183633;
+  text-align: center;
+  box-shadow: 0 24px 70px rgba(10, 49, 42, .25);
+}
+
+#renewalSuccess::backdrop {
+  background: rgba(10, 32, 30, .58);
+}
+
+.success-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: #dcf5ec;
+  color: #168b7e;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+#renewalSuccess h2 {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+}
+
+#renewalSuccess p {
+  margin: 0 0 22px;
+  color: #617875;
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.success-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.success-actions a {
+  display: block;
+  padding: 12px 15px;
+  border-radius: 11px;
+  font-size: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.success-primary {
+  background: #2ca394;
+  color: #fff;
+}
+
+.success-primary:hover {
+  background: #187f74;
+}
+
+.success-secondary {
+  border: 1px solid #cfe8e1;
+  background: #f1faf7;
+  color: #187f74;
+}
+
+.success-secondary:hover {
+  background: #e3f5ef;
+}
+  </style>
+</head>
+
+<body>
+  <main class="renewal-page">
+
+    <nav class="page-top" aria-label="Back navigation">
+  <a
+  href="rm-profile.html"
+  class="back-button"
+  aria-label="Back to provider profile"
+>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </a>
+
+      <div class="page-top-text">
+        <small>From Notifications</small>
+<strong>Business permit renewal</strong>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="hero-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm1 7V3.5L18.5 9H15zm-3 9.6l-3.3-3.3 1.4-1.4 1.9 1.9 4-4 1.4 1.4-5.4 5.4z"/>
+        </svg>
+      </span>
+
+      <h1>Renew Business Permit</h1>
+      <p>
+        Submit your renewed permit for administrator review.
+        Your current approved permit stays on your profile until
+        the new one is approved.
+      </p>
+    </header>
+
+    <section class="renewal-card" aria-label="Permit renewal form">
+
+      <div class="current-permit">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.6l3.4 2-.9 1.5L11 13.5V7h2z"/>
+        </svg>
+        <p id="currentPermit">Checking current permit…</p>
+      </div>
+
+      <p id="pendingRenewal"></p>
+
+      <form id="renewalForm">
+        <h2 class="section-title">
+          <span class="section-number">1</span>
+          Upload renewed permit
+        </h2>
+
+        <p class="section-description">
+          Choose a clear image or PDF. The administrator will review
+          this document before updating your profile.
+        </p>
+
+        <label class="field-label" for="renewedPermit">
+          Business permit file
+        </label>
+
+        <label class="upload-area" id="uploadArea">
+          <input
+            id="renewedPermit"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,application/pdf"
+            required
+          >
+
+          <span class="upload-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M19 13v6H5v-6H3v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2zm-8-8.2V16h2V4.8l3.6 3.6L18 7l-6-6-6 6 1.4 1.4L11 4.8z"/>
+            </svg>
+          </span>
+
+          <strong>Tap to select a file</strong>
+          <span>JPG, PNG, WEBP or PDF · Maximum 10 MB</span>
+        </label>
+
+        <p id="selectedFile" aria-live="polite"></p>
+        <img id="filePreview" alt="Selected permit preview" hidden>
+
+        <div class="date-section">
+          <h2 class="section-title">
+            <span class="section-number">2</span>
+            New expiration date
+          </h2>
+
+          <label class="field-label" for="renewedExpiry">
+            Date printed on the new permit
+          </label>
+
+          <input id="renewedExpiry" type="date" required>
+
+          <p class="date-help">
+            Enter the expiration date shown on your renewed permit.
+            It must be later than your current permit's expiration date.
+          </p>
+        </div>
+
+        <button id="renewalSubmit" type="submit">
+          Submit for admin review →
+        </button>
+
+        <p id="renewalStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const permitInput = document.getElementById("renewedPermit");
+    const selectedFile = document.getElementById("selectedFile");
+    const filePreview = document.getElementById("filePreview");
+    const uploadArea = document.getElementById("uploadArea");
+
+    let previewURL = null;
+
+    function updateSelectedFile() {
+      const file = permitInput.files?.[0];
+
+      if (previewURL) {
+        URL.revokeObjectURL(previewURL);
+        previewURL = null;
+      }
+
+      filePreview.hidden = true;
+      filePreview.removeAttribute("src");
+      selectedFile.textContent = "";
+
+      if (!file) return;
+
+      selectedFile.textContent = `Selected: ${file.name}`;
+
+      if (file.type.startsWith("image/")) {
+        previewURL = URL.createObjectURL(file);
+        filePreview.src = previewURL;
+        filePreview.hidden = false;
+      }
+    }
+
+    permitInput.addEventListener("change", updateSelectedFile);
+
+    // Supports dragging a file onto the upload area on laptops.
+    uploadArea.addEventListener("dragover", event => {
+      event.preventDefault();
+      uploadArea.classList.add("dragging");
+    });
+
+    uploadArea.addEventListener("dragleave", () => {
+      uploadArea.classList.remove("dragging");
+    });
+
+    uploadArea.addEventListener("drop", event => {
+      event.preventDefault();
+      uploadArea.classList.remove("dragging");
+
+      if (!event.dataTransfer?.files?.length) return;
+
+      permitInput.files = event.dataTransfer.files;
+      updateSelectedFile();
+    });
+
+    window.addEventListener("pagehide", () => {
+      if (previewURL) URL.revokeObjectURL(previewURL);
+    });
+  </script>
+<dialog id="renewalSuccess" aria-labelledby="renewalSuccessTitle">
+  <div class="success-icon" aria-hidden="true">✓</div>
+
+  <h2 id="renewalSuccessTitle">Permit submitted</h2>
+
+  <p>
+    Your renewed business permit was submitted successfully.
+    Please wait for the administrator to review it.
+    You will receive a notification when there is an update.
+  </p>
+
+  <div class="success-actions">
+    <a href="notification.html" class="success-secondary">
+      Back to Notifications
+    </a>
+
+    <a href="rm-index.html" class="success-primary">
+      Go to Provider Home
+    </a>
+  </div>
+</dialog>
+  <!-- Keep your existing Firebase upload and review logic. -->
+  <script type="module" src="js/permit-renewal.js"></script>
+</body>
+</html>

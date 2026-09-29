@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Community Requests - REPARO</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: #edf5f4;
+    }
+
+    .community-page {
+      min-height: 100dvh;
+      padding-bottom: 90px;
+      background: #f7fbfa;
+    }
+
+    .community-page-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: max(18px, env(safe-area-inset-top)) 18px 20px;
+      background: #33af9c;
+      color: #fff;
+    }
+
+    .community-page-back {
+      display: grid;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 50%;
+      background: #ffffff38;
+      color: #fff;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    .community-page-header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .community-page-header p {
+      margin: 4px 0 0;
+      font-size: 12px;
+    }
+
+    .community-page .community-section {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px 16px 30px;
+}
+
+    .community-page #communityRequests {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .community-page #communityRequests .request-card {
+     box-sizing: border-box;
+width: 100%;
+max-width: none;
+min-width: 0;
+margin: 0;
+      padding: 18px;
+      border: 1px solid #d5ebe6 !important;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 3px 12px #173d3410;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 480px) {
+      .community-page #communityRequests .request-card {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="community-page">
+    <header class="community-page-header">
+      <a href="index.html" class="community-page-back" aria-label="Back to home">←</a>
+      <div>
+        <h1>Community Requests</h1>
+        <p>Service requests posted by customers</p>
+      </div>
+    </header>
+
+    <main class="community-section">
+      <p id="communityLoading" role="status">Loading community requests…</p>
+      <div id="communityRequests"></div>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <a href="index.html" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="search.html" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"/></svg>
+        <span>Search</span>
+      </a>
+     <a href="post.html" class="fab-btn" aria-label="Post a Request">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+  </svg>
+</a>
+      <a href="mybooking.html" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+        <span>Booking</span>
+      </a>
+      <a href="myprofile.html" class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 6v2h16v-2c0-4-4-6-8-6z"/></svg>
+        <span>Profile</span>
+      </a>
+    </nav>
+  </div>
+
+  <script type="module" src="js/reparo-app.js"></script>
+</body>
+</html>
